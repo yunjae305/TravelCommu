@@ -7,6 +7,7 @@ import {
   showMyPage,
   showWriteForm,
   createPlanner,
+  FixProfile,
   requestJoin
 } from '../controllers/travelController.js';
 
@@ -18,6 +19,7 @@ router.post('/trips', createTrip);
 router.get('/trips/:id', showTripDetail);
 router.get('/mypage', showMyPage);
 router.get('/write', showWriteForm);
+router.get('/profile-fix', FixProfile);
 router.post('/planner', createPlanner);
 router.post('/trips/:id/request', requestJoin);
 
