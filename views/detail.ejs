@@ -1,103 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/homepage.css">
+  <title>여행 상세</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-  <main class="container narrow">
-    <header class="page-header">
-      <div>
-        <p class="eyebrow">TRIP</p>
-        <h1><%= trip ? (trip.topic || trip.title) : '여행 정보 없음' %></h1>
-        <p class="muted"><%= trip ? ((trip.destination || trip.country) + ' · ' + (trip.headcount ? trip.headcount + '명' : '인원 미정') + ' · ' + trip.budget) : '' %></p>
-      </div>
-      <div class="hero__actions" style="gap:8px;">
-        <a class="btn ghost" href="/home">목록으로</a>
-        <% if (trip) { %>
-          <button class="btn primary" id="join-btn" type="button" data-author-email="<%= trip.authorEmail || '' %>">참여 요청</button>
-        <% } %>
-      </div>
-    </header>
+<body class="detail-body" style="font-family: 'Noto Sans KR', sans-serif; background-color: #faf9f1; margin: 0;">
+  <header class="top-header" style="height: 50px; background-color: #005eff; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);">
+    <div class="header-left">
+      <a href="/home" class="logo" style="display: flex; align-items: center; text-decoration: none; color: #ffffff; font-size: 24px; font-weight: 700;">
+          <i class="fas fa-plane-departure"></i> 
+          <span class="logo-text" style="padding-left: 10px;">Travel</span>
+      </a>
+    </div>
+    <div class="header-right" style="display: flex; gap: 10px;">
+      <button class="header-btn back-btn" style="background-color: #ffffff; color: #005eff; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 5px;" onclick="history.back()">
+          <i class="fas fa-arrow-left"></i> 
+          <span>이전</span>
+      </button>
+    </div>
+  </header>
 
-    <% if (message) { %>
-      <div class="alert"><%= message %></div>
-    <% } %>
+  <div class="bg-icon" style="position: absolute; bottom: -400px; right: 10px; font-size: 1500px; color: #005eff; opacity: 0.1; transform: rotate(210deg); pointer-events: none; z-index: -1;">
+      <i class="fas fa-plane"></i>
+  </div>
 
-    <% if (trip) { %>
-      <section class="trip-meta">
-        <div class="pill"><%= trip.destination || trip.country %></div>
-        <div class="tags">
-          <% (trip.places && trip.places.length ? trip.places : []).forEach(place => { %>
-            <span class="tag">#<%= place %></span>
-          <% }) %>
+  <main class="detail-container board-layout" style="max-width: 940px; margin: 0 auto; padding: 28px 16px 56px;">
+    <section class="board-article" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.25); padding: 28px;">
+      <header class="board-head" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 16px;">
+        <div class="board-title">
+          <h1 style="margin: 4px 0 8px; font-size: 28px; color: #000000; background-color: #005eff; padding: 20px 30px; border-radius: 15px;">제주도 여행</h1>
         </div>
-        <div class="muted small">작성자 <strong><%= trip.authorName || trip.author || '익명' %></strong> · <%= trip.createdAt.toLocaleString('ko-KR') %></div>
-      </section>
+      </header>
 
-      <article class="trip-body">
-        <p><%= trip.description %></p>
+      <div class="board-tags" style="display: flex; flex-wrap: wrap; gap: 10px; padding: 16px 0 10px;">
+        <span class="pill" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #eef2ff; color: #4338ca; font-weight: 600; font-size: 14px;">
+          <i class="fas fa-map-marker-alt"></i>제주도
+        </span>
+        <span class="pill" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #eef2ff; color: #4338ca; font-weight: 600; font-size: 14px;">
+          <i class="fas fa-users"></i>4명
+        </span>
+        <span class="pill" style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #eef2ff; color: #4338ca; font-weight: 600; font-size: 14px;">
+          <i class="fas fa-wallet"></i>100만원
+        </span>
+      </div>
+
+      <article class="board-body" style="margin-top: 18px; padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 16px; color: #0f172a;">
+          <i class="fas fa-info-circle" style="color: #1d4ed8;"></i>상세 내용
+        </h3>
+        <p class="detail-text" style="margin: 0; line-height: 1.7; color: #334155; white-space: pre-line;">제주도에서 힐링하고 맛집 탐방하는 3박 4일 여행을 계획하고 있습니다. 함께 가실 분 찾습니다!</p>
+        <div class="board-meta footer-meta" style="display: flex; gap: 12px; color: #0f172a; font-size: 14px; justify-content: flex-end; margin-top: 12px;">
+          <span><i class="fas fa-user" style="margin-right: 6px;"></i>김여행</span>
+          <span><i class="far fa-clock" style="margin-right: 6px;"></i>2025. 12. 2. PM 11:49:43</span>
+        </div>
       </article>
-    <% } %>
+
+      <section class="board-body route-body" style="margin-top: 18px; padding: 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;">
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 16px; color: #0f172a;">
+          <i class="fas fa-route" style="color: #1d4ed8;"></i>방문지
+        </h3>
+        <div class="tag-wrap" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <span class="tag" style="display: inline-flex; padding: 6px 10px; border-radius: 8px; background: #e2e8f0; color: #0f172a; font-weight: 600; font-size: 13px;">#성산일출봉</span>
+          <span class="tag" style="display: inline-flex; padding: 6px 10px; border-radius: 8px; background: #e2e8f0; color: #0f172a; font-weight: 600; font-size: 13px;">#우도</span>
+          <span class="tag" style="display: inline-flex; padding: 6px 10px; border-radius: 8px; background: #e2e8f0; color: #0f172a; font-weight: 600; font-size: 13px;">#협재해수욕장</span>
+        </div>
+      </section>
+    </section>
   </main>
-  <script type="module" src="/firebase-client.js"></script>
-  <% if (trip) { %>
-  <script>
-    (function() {
-      const joinBtn = document.getElementById('join-btn');
-      if (!joinBtn) return;
-
-      // 본인 게시글이면 참여 버튼 숨김
-      try {
-        const raw = localStorage.getItem('currentUser');
-        if (raw) {
-          const user = JSON.parse(raw);
-          const authorEmail = joinBtn.getAttribute('data-author-email');
-          if (authorEmail && user.email && user.email === authorEmail) {
-            joinBtn.style.display = 'none';
-            return;
-          }
-        }
-      } catch (_) {}
-
-      joinBtn.addEventListener('click', async () => {
-        try {
-          const raw = localStorage.getItem('currentUser');
-          if (!raw) {
-            alert('로그인 후 참여 요청을 보낼 수 있습니다.');
-            window.location.href = '/login';
-            return;
-          }
-          const user = JSON.parse(raw);
-          const message = prompt('참여 요청 메모를 남겨주세요 (선택 사항)', '');
-          joinBtn.disabled = true;
-          joinBtn.textContent = '요청 전송 중...';
-          const res = await fetch('/trips/<%= trip.id %>/request', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              requesterName: user.name || '익명',
-              requesterEmail: user.email || '',
-              message: message || ''
-            })
-          });
-          if (res.ok) {
-            alert('참여 요청이 전송되었습니다.');
-          } else {
-            const data = await res.json();
-            alert(data.error || '요청 전송 중 오류가 발생했습니다.');
-          }
-        } catch (e) {
-          alert('요청을 처리할 수 없습니다.');
-        } finally {
-          joinBtn.disabled = false;
-          joinBtn.textContent = '참여 요청';
-        }
-      });
-    })();
-  </script>
-  <% } %>
 </body>
 </html>
