@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Travel List' %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/asset/style-main.css">
+</head>
+<body>
+    <header class="top-header">
+        <a href="/home" class="logo">
+            <i class="fas fa-plane-departure"></i> 
+            <span class="logo-text">Travel</span>
+        </a>
+
+        <!-- 헤더 우측: 로그인 링크, 로그인 시 노출되는 프로필/로그아웃 -->
+        <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
+            <div id="header-user" style="display:none; gap:8px; align-items:center;">
+                <a href="/mypage" class="header-right" id="header-profile" style="display:flex; align-items:center; gap:6px;">
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="user-name" id="user-name" style="display:none;">OOO님</span>
+                    </div>
+                </a>
+                <button class="logout-btn" onclick="location.href='/'">로그아웃</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="bg-icon">
+        <i class="fas fa-plane"></i>
+    </div>
+    
+    <div class="main-container">
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-list-ul" style="color: #ff6b6b; margin-right: 8px;"></i>
+                    <span>여행 플랜 목록</span>
+                </h2>
+                <a href="/home" class="see-more" style="color: #005eff; cursor: pointer;">← 돌아가기</a>
+            </div>
+
+            <style>
+              .trip-table { width: 100%; border-collapse: collapse; }
+              .trip-table th, .trip-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+              .trip-table th { background: #f8fafc; color: #334155; font-weight: 700; }
+              .trip-table tbody tr:hover { background: #f1f5f9; }
+              .trip-title { color: #0f172a; font-weight: 600; text-decoration: none; }
+              .trip-title:hover { text-decoration: underline; }
+              .trip-meta { color: #475569; font-size: 14px; }
+              .empty-row { text-align: center; color: #94a3b8; padding: 24px 12px; }
+            </style>
+
+            <table class="trip-table">
+              <thead>
+                <tr>
+                  <th style="width: 45%;">제목</th>
+                  <th style="width: 15%;">참여인원</th>
+                  <th style="width: 20%;">작성자</th>
+                  <th style="width: 20%;">작성일</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% const hasTrips = (trips || []).length > 0; %>
+                <% if (hasTrips) { %>
+                  <% (trips || []).forEach((trip) => { %>
+                    <tr>
+                      <td><a class="trip-title" href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></td>
+                      <td class="trip-meta"><%= typeof trip.headcount !== 'undefined' ? trip.headcount : '-' %></td>
+                      <td class="trip-meta"><%= trip.authorName || trip.author || '익명' %></td>
+                      <td class="trip-meta"><%= trip.createdAt ? new Date(trip.createdAt).toLocaleDateString('ko-KR') : '-' %></td>
+                    </tr>
+                  <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="3" class="empty-row">등록된 여행 플랜이 없습니다.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+        </section>
+    </div>
+
+   <div class="floating-button-box">
+        <a href="/write" class="write-item">
+            <div class="write-button">
+                <i class="fas fa-pen" style="width:50px; height:50px;"></i>
+            </div>
+            <span class="write-label">플래너 작성</span>
+        </a>
+    </div>
+
+    <!-- 로그인 상태 토글 및 사용자 이름 렌더링 -->
+    <script type="module" src="/auth-ui.js"></script>
+    <script>
+      (function() {
+        try {
+          const raw = localStorage.getItem('currentUser');
+          if (!raw) return;
+          const user = JSON.parse(raw);
+          const nameEl = document.getElementById('user-name');
+          if (nameEl && user && user.name) nameEl.textContent = `${user.name}님`;
+
+          // ============================================
+          // 선호 여행지: 회원가입 시 입력한 선호국가와 일치하는 것만 표시
+          // ============================================
+          const preferenceGrid = document.getElementById('preference-trips-grid');
+          if (preferenceGrid && user.country) {
+            const preferenceCards = preferenceGrid.querySelectorAll('.preference-trip-card');
+            const matchedCards = [];
+
+            preferenceCards.forEach(card => {
+              const destination = card.getAttribute('data-destination');
+              // 선호국가와 destination이 일치하면 유지
+              if (destination && destination.toLowerCase().includes(user.country.toLowerCase())) {
+                matchedCards.push(card);
+              }
+            });
+
+            // 일치하는 카드가 있으면 화면에 유지, 없으면 모두 숨김
+            if (matchedCards.length > 0) {
+              preferenceCards.forEach(card => {
+                card.style.display = 'none';
+              });
+              matchedCards.forEach(card => {
+                card.style.display = '';
+              });
+            } else {
+              // 일치하는 카드가 없으면 모든 카드 숨김
+              preferenceCards.forEach(card => {
+                card.style.display = 'none';
+              });
+            }
+          }
+        } catch (e) {
+          console.warn('사용자 정보 처리 실패', e);
+        }
+      })();
+    </script>
+  </body>
+</html>

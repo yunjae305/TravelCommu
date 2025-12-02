@@ -40,10 +40,10 @@
                     <i class="fas fa-heart" style="color: #ff6b6b; margin-right: 8px;"></i>
                     <span>선호 여행지</span>
                 </h2>
-                <a href="/trips/new" class="see-more">+ 더보기</a>
+                <a href="/trip-list" class="see-more">+ 더보기</a>
             </div>
             
-            <div class="card-grid">
+            <div class="card-grid" id="preference-trips-grid">
                 <% const fallbackImages = [
                   'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
                   'https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
@@ -52,7 +52,7 @@
                 ]; %>
                 <% if ((trips || []).length) { %>
                   <% (trips || []).slice(0, 4).forEach((trip, idx) => { %>
-                    <div class="card">
+                    <div class="card preference-trip-card" data-destination="<%= trip.destination || trip.country %>">
                         <div class="card-image" style="background-image: url('<%= fallbackImages[idx % fallbackImages.length] %>');"></div>
                         <div class="card-content">
                             <span class="card-create-name">작성자: <%= trip.authorName || trip.author || '익명' %></span>
@@ -102,11 +102,16 @@
                 <a href="/mypage" class="see-more">+ 더보기</a>
             </div>
             
-            <div class="card-grid">
-                <% const writtenTrips = (trips || []).slice(0, 3); %>
+            <div class="card-grid" id="my-plans-grid">
+                <% 
+                    let currentUserEmail = '';
+                    let writtenTrips = [];
+                    // 이 부분은 서버 사이드에서 추가되며, 클라이언트 사이드에서는 JavaScript로 처리
+                    writtenTrips = (trips || []);
+                %>
                 <% if (writtenTrips.length) { %>
                   <% writtenTrips.forEach((trip, idx) => { %>
-                    <div class="card">
+                    <div class="card" class="user-trip-card" data-author-email="<%= trip.authorEmail %>">
                         <div class="card-image" style="background-image: url('<%= fallbackImages[(idx + 1) % fallbackImages.length] %>');"></div>
                         <div class="card-content">
                             <span class="card-create-name">작성자: <%= trip.authorName || trip.author || '익명' %></span>
@@ -146,10 +151,78 @@
           const user = JSON.parse(raw);
           const nameEl = document.getElementById('user-name');
           if (nameEl && user && user.name) nameEl.textContent = `${user.name}님`;
+
+          // ============================================
+          // 선호 여행지: 사용자의 선호국가와 일치하는 것만 표시
+          // ============================================
+          const preferenceGrid = document.getElementById('preference-trips-grid');
+          if (preferenceGrid && user.country) {
+            const preferenceCards = preferenceGrid.querySelectorAll('.preference-trip-card');
+            const matchedCards = [];
+
+            preferenceCards.forEach(card => {
+              const destination = card.getAttribute('data-destination');
+              // 선호국가와 destination이 일치하면 유지
+              if (destination && destination.toLowerCase().includes(user.country.toLowerCase())) {
+                matchedCards.push(card);
+              }
+            });
+
+            // 일치하는 카드가 있으면 화면에 유지, 없으면 모두 숨김
+            if (matchedCards.length > 0) {
+              preferenceCards.forEach(card => {
+                card.style.display = 'none';
+              });
+              matchedCards.forEach(card => {
+                card.style.display = '';
+              });
+            } else {
+              // 일치하는 카드가 없으면 모든 카드 숨김
+              preferenceCards.forEach(card => {
+                card.style.display = 'none';
+              });
+            }
+          }
+
+          
+          const userEmail = user.email;
+          const tripCards = document.querySelectorAll('.card[data-author-email]');
+          const cardGrid = document.querySelector('#my-plans-grid');
+          
+          let userTrips = [];
+          tripCards.forEach(card => {
+            const authorEmail = card.getAttribute('data-author-email');
+            if (authorEmail === userEmail) {
+              userTrips.push(card);
+            }
+          });
+
+          // 유저 여행지 필터링: 현재 사용자가 작성한 카드만 표시
+          if (cardGrid && userTrips.length > 0) {
+            // 기존 카드들 제거
+            cardGrid.querySelectorAll('.card[data-author-email]').forEach(card => {
+              card.remove();
+            });
+            // 사용자 작성 카드 모두 추가
+            userTrips.forEach(card => {
+              cardGrid.appendChild(card.cloneNode(true));
+            });
+          } else if (cardGrid && userTrips.length === 0) {
+            // 사용자가 작성한 플랜이 없으면 기본 메시지 표시
+            cardGrid.innerHTML = `
+              <div class="card">
+                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="card-content">
+                  <span class="card-create-name">작성된 플랜이 없습니다</span>
+                  <h3 class="card-name">새로운 플랜을 작성해보세요</h3>
+                </div>
+              </div>
+            `;
+          }
         } catch (e) {
-          console.warn('사용자 이름 표시 실패', e);
+          console.warn('사용자 정보 처리 실패', e);
         }
       })();
     </script>
-</body>
+  </body>
 </html>
