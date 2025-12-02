@@ -24,9 +24,16 @@ header
     background-color: #005eff;
     color: #FFFFFF;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 10px 30px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-right
+{
+    display: flex;
+    gap: 10px;
 }
 
 .logo 
@@ -44,9 +51,36 @@ header
     padding-left: 10px;
 }
 
+.header-btn
+{
+    background-color: #ffffff;
+    color: #005eff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-btn:hover 
+{
+    background-color: #3e85ff;
+    color: #ffffff;
+}
+
+.logout-btn:hover
+{
+    background-color:red;
+    color:#ffffff;
+}
+
 .mypage-container 
 {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 40px 20px;
     padding-bottom: 100px;
@@ -206,21 +240,4 @@ header
 .card-actions 
 {
     margin-left: 20px;
-}
-
-.btn-accept 
-{
-    background-color: #005eff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.btn-accept:hover 
-{
-    background-color: #0046c0;
 }

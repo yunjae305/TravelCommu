@@ -90,6 +90,15 @@ export async function showTripDetail(req, res, next) {
   }
 }
 
+export async function FixProfile(req, res, next) {
+  try {
+      res.render('profile-fix');
+    }
+   catch (err) {
+      next(err);
+  }
+}
+
 export async function showMyPage(_req, res, next) {
   try {
     const trips = (await TripDB.getAll()).slice(0, 3);

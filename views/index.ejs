@@ -17,7 +17,6 @@
 
         <!-- 헤더 우측: 로그인 링크, 로그인 시 노출되는 프로필/로그아웃 -->
         <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
-            <a href="/login" class="btn-login">로그인</a>
             <div id="header-user" style="display:none; gap:8px; align-items:center;">
                 <a href="/mypage" class="header-right" id="header-profile" style="display:flex; align-items:center; gap:6px;">
                     <div class="user-profile">
@@ -25,7 +24,7 @@
                         <span class="user-name" id="user-name" style="display:none;">OOO님</span>
                     </div>
                 </a>
-                <button id="logout-btn" class="btn-logout" style="display:none;">로그아웃</button>
+                <button class="logout-btn" onclick="location.href='/'">로그아웃</button>
             </div>
         </div>
     </header>

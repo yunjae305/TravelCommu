@@ -71,6 +71,12 @@ header
     gap: 5px;
 }
 
+.back-btn:hover 
+{
+    background-color: #3e85ff;
+    color: #ffffff;
+}
+
 .save-btn:hover
 {
     background-color:#3e85ff;

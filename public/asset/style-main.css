@@ -51,21 +51,42 @@ header
 {
     display: flex;
     align-items: center;
-    text-decoration: none;
-    color: #ffffff;
+    gap: 20px;
+}
+
+.logout-btn {
+    background-color: #ffffff;
+    color: #005eff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    background-color: red;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .user-profile
 {
     display: flex;
     align-items: center;
+    color: #ffffff;
+    text-decoration: none;
     font-size: 16px;
     font-weight: 700;
+    transition: opacity 0.2s;
 }
 
 .user-profile i 
 {
+    text-decoration: none;
     font-size: 24px;
     margin-right: 8px;
 }
