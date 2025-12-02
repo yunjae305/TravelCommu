@@ -62,7 +62,7 @@ if (loginBtn) {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem('currentUser', JSON.stringify(data.user));
-        window.location.href = '/mypage';
+        window.location.href = '/home';
       } else {
         const data = await res.json();
         showError(data.error || '서버 처리 중 오류가 발생했습니다.');

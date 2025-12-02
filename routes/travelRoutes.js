@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 
-router.get('/', listTrips);
+router.get(['/home', '/trips'], listTrips);
 router.get('/trips/new', showCreateForm);
 router.post('/trips', createTrip);
 router.get('/trips/:id', showTripDetail);

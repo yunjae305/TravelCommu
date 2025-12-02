@@ -15,7 +15,7 @@
         <p class="muted"><%= trip ? ((trip.destination || trip.country) + ' · ' + (trip.headcount ? trip.headcount + '명' : '인원 미정') + ' · ' + trip.budget) : '' %></p>
       </div>
       <div class="hero__actions" style="gap:8px;">
-        <a class="btn ghost" href="/">목록으로</a>
+        <a class="btn ghost" href="/home">목록으로</a>
         <% if (trip) { %>
           <button class="btn primary" id="join-btn" type="button" data-author-email="<%= trip.authorEmail || '' %>">참여 요청</button>
         <% } %>
