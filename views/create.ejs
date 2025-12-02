@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || '여행 플랜 작성' %></title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="/asset/style-planner.css">
+</head>
+<body>
+    <header class="top-header">
+        <div class="header-left">
+            <a href="/" class="logo">
+                <i class="fas fa-plane-departure"></i> 
+                <span class="logo-text">Travel</span>
+            </a>
+        </div>
+        <div class="header-right">
+            <button class="header-btn save-btn" type="submit" form="planner-form">
+                <i class="fas fa-save"></i> 
+                <span>저장</span>
+            </button>
+            <button class="header-btn delete-btn" type="reset" form="planner-form">
+                <i class="fas fa-trash-alt"></i>
+                <span>삭제</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="bg-icon">
+        <i class="fas fa-plane"></i>
+    </div>
+    
+    <div class="title">
+        <h1>새로운 여행 플래너 생성</h1>
+    </div>
+    <div class="write-container">
+        <form class="plan-form" id="planner-form" action="/planner" method="POST">
+            <div class="left-panel">
+                <div class="form-group">
+                    <label for="subject">주제</label>
+                    <input id="subject" name="title" placeholder="여행 주제를 입력하세요 (예: 힐링 부산 여행)" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">여행국가</label>
+                    <div class="select-wrapper">
+                        <input id="country" name="location" placeholder="여행국가를 입력해주세요." required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="members">여행인원 (최대 인원)</label>
+                    <div class="input-with-text">
+                        <input id="members" name="members" type="number" placeholder="0" min="1" max="20" required>
+                        <span class="unit-text">/ 5 명</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">예산</label>
+                    <div class="input-with-text">
+                        <input id="budget" name="budget" type="number" placeholder="예산을 입력하세요" min="0">
+                        <span class="unit-text">원</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">상세설명</label>
+                    <textarea id="description" name="desc" rows="8" placeholder="여행에 대한 자세한 설명을 적어주세요."></textarea>
+                </div>
+
+            </div>
+
+            <div class="right-panel">
+                <h3 class="section-title">여행 방문지 설정</h3>
+                
+                <div class="route-list" id="route-list">
+                    <div class="route-item">
+                        <span class="route-index">1</span>
+                        <input class="route-input" placeholder="첫 번째 방문지">
+                    </div>
+                    
+                    <div class="route-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+
+                    <div class="route-item">
+                        <span class="route-index">2</span>
+                        <input class="route-input" placeholder="두 번째 방문지">
+                    </div>
+                </div>
+
+                <button class="add-route" type="button" id="add-route-btn">+ 방문지 추가</button>
+            </div>
+            <input type="hidden" name="places" id="places">
+            <input type="hidden" name="authorName" id="authorName">
+            <input type="hidden" name="authorEmail" id="authorEmail">
+        </form>
+    </div>
+
+    <script>
+      (function() {
+        const form = document.getElementById('planner-form');
+        const addBtn = document.getElementById('add-route-btn');
+        const routeList = document.getElementById('route-list');
+        const placesInput = document.getElementById('places');
+
+        function syncAuthor() {
+          try {
+            const raw = localStorage.getItem('currentUser');
+            if (!raw) return;
+            const user = JSON.parse(raw);
+            if (user.name) document.getElementById('authorName').value = user.name;
+            if (user.email) document.getElementById('authorEmail').value = user.email;
+          } catch (e) {
+            console.warn('작성자 정보 설정 실패', e);
+          }
+        }
+
+        function updateRouteIndexes() {
+          const indexes = routeList.querySelectorAll('.route-index');
+          indexes.forEach((el, idx) => {
+            el.textContent = idx + 1;
+          });
+        }
+
+        function addRouteInput() {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'route-item';
+          wrapper.innerHTML = '<span class="route-index"></span><input class="route-input" placeholder="방문지">';
+          routeList.appendChild(wrapper);
+          updateRouteIndexes();
+        }
+
+        addBtn?.addEventListener('click', addRouteInput);
+
+        form?.addEventListener('submit', () => {
+          const values = Array.from(document.querySelectorAll('.route-input'))
+            .map((el) => el.value.trim())
+            .filter(Boolean);
+          placesInput.value = values.join(',');
+          syncAuthor();
+        });
+
+        syncAuthor();
+      })();
+    </script>
+</body>
+</html>

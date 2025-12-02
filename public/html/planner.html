@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Plan Write</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../views/asset/style-planner.css">
+</head>
+<body>
+    <header class="top-header">
+        <div class="header-left">
+            <a href="main.html" class="logo">
+                <i class="fas fa-plane-departure"></i> 
+                <span class="logo-text">Travel</span>
+            </a>
+        </div>
+        <div class="header-right">
+            <button class="header-btn save-btn">
+                <i class="fas fa-save"></i> 
+                <span>저장</span>
+            </button>
+            <button class="header-btn delete-btn">
+                <i class="fas fa-trash-alt"></i>
+                <span>삭제</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="bg-icon">
+        <i class="fas fa-plane"></i>
+    </div>
+    
+    <div class="title">
+        <h1>새로운 여행 플래너 생성</h1>
+    </div>
+    <div class="write-container">
+        <form class="plan-form">
+            <div class="left-panel">
+                <div class="form-group">
+                    <label for="subject">주제</label>
+                    <input id="subject" placeholder="여행 주제를 입력하세요 (예: 힐링 부산 여행)">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">여행국가</label>
+                    <div class="select-wrapper">
+                        <input id="country" placeholder="여행국가를 입력해주세요.">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="members">여행인원 (최대 인원)</label>
+                    <div class="input-with-text">
+                        <input id="members" placeholder="0" min="1" max="5">
+                        <span class="unit-text">/ 5 명</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">상세설명</label>
+                    <textarea id="description" rows="8" placeholder="여행에 대한 자세한 설명을 적어주세요."></textarea>
+                </div>
+
+            </div>
+
+            <div class="right-panel">
+                <h3 class="section-title">여행 방문지 설정</h3>
+                
+                <div class="route-list">
+                    <div class="route-item">
+                        <span class="route-index">1</span>
+                        <input class="route-input" placeholder="첫 번째 방문지">
+                    </div>
+                    
+                    <div class="route-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+
+                    <div class="route-item">
+                        <span class="route-index">2</span>
+                        <input class="route-input" placeholder="두 번째 방문지">
+                    </div>
+
+                    <div class="route-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+
+                    <div class="route-item">
+                        <span class="route-index">3</span>
+                        <input class="route-input" placeholder="세 번째 방문지">
+                    </div>
+
+                    <div class="route-arrow">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+
+                    <div class="route-item">
+                        <span class="route-index">4</span>
+                        <input class="route-input" placeholder="네 번째 방문지">
+                    </div>
+                </div>
+
+                <button type="button" class="btn-add-route">
+                    <i class="fas fa-plus"></i> 
+                    <span>추가</span>
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>

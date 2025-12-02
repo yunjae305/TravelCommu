@@ -1,0 +1,10 @@
+# node modules and OS cruft
+node_modules/
+.DS_Store
+
+# env / secrets
+.env
+servicekey.json
+
+# local data artifacts (runtime user info 등)
+data/

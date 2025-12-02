@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Travel Main' %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/asset/style-main.css">
+</head>
+<body>
+    <header class="top-header">
+        <a href="/" class="logo">
+            <i class="fas fa-plane-departure"></i> 
+            <span class="logo-text">Travel</span>
+        </a>
+
+        <!-- 헤더 우측: 로그인 링크, 로그인 시 노출되는 프로필/로그아웃 -->
+        <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
+            <a href="/login" class="btn-login">로그인</a>
+            <div id="header-user" style="display:none; gap:8px; align-items:center;">
+                <a href="/mypage" class="header-right" id="header-profile" style="display:flex; align-items:center; gap:6px;">
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="user-name" id="user-name" style="display:none;">OOO님</span>
+                    </div>
+                </a>
+                <button id="logout-btn" class="btn-logout" style="display:none;">로그아웃</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="bg-icon">
+        <i class="fas fa-plane"></i>
+    </div>
+    
+    <div class="main-container">
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-heart" style="color: #ff6b6b; margin-right: 8px;"></i>
+                    <span>선호 여행지</span>
+                </h2>
+                <a href="/trips/new" class="see-more">+ 더보기</a>
+            </div>
+            
+            <div class="card-grid">
+                <% const fallbackImages = [
+                  'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                  'https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                  'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                  'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                ]; %>
+                <% if ((trips || []).length) { %>
+                  <% (trips || []).slice(0, 4).forEach((trip, idx) => { %>
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('<%= fallbackImages[idx % fallbackImages.length] %>');"></div>
+                        <div class="card-content">
+                            <span class="card-create-name">작성자: <%= trip.authorName || trip.author || '익명' %></span>
+                            <h3 class="card-name"><a href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></h3>
+                        </div>
+                    </div>
+                  <% }); %>
+                <% } else { %>
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="card-content">
+                            <span class="card-create-name">작성자: OOO</span>
+                            <h3 class="card-name">제주도 푸른 밤</h3>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="card-content">
+                            <span class="card-create-name">작성자: OOO</span>
+                            <h3 class="card-name">경주 불국사</h3>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="card-content">
+                            <span class="card-create-name">작성자: OOO</span>
+                            <h3 class="card-name">도쿄 타워</h3>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="card-content">
+                            <span class="card-create-name">작성자: OOO</span>
+                            <h3 class="card-name">파리 에펠탑</h3>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-pen-nib" style="color: #005eff; margin-right: 8px;"></i> 
+                    <span>내가 작성한 플랜</span>
+                </h2>
+                <a href="/mypage" class="see-more">+ 더보기</a>
+            </div>
+            
+            <div class="card-grid">
+                <% const writtenTrips = (trips || []).slice(0, 3); %>
+                <% if (writtenTrips.length) { %>
+                  <% writtenTrips.forEach((trip, idx) => { %>
+                    <div class="card">
+                        <div class="card-image" style="background-image: url('<%= fallbackImages[(idx + 1) % fallbackImages.length] %>');"></div>
+                        <div class="card-content">
+                            <span class="card-create-name">작성자: <%= trip.authorName || trip.author || '익명' %></span>
+                            <h3 class="card-name"><a href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></h3>
+                        </div>
+                    </div>
+                  <% }); %>
+                <% } else { %>
+                  <div class="card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-content">
+                        <span class="card-create-name">작성자: OOO</span>
+                        <h3 class="card-name">이번 여름 부산 여행</h3>
+                    </div>
+                  </div>
+                <% } %>
+            </div>
+        </section>
+    </div>
+
+   <div class="floating-button-box">
+        <a href="/write" class="write-item">
+            <div class="write-button">
+                <i class="fas fa-pen" style="width:50px; height:50px;"></i>
+            </div>
+            <span class="write-label">플래너 작성</span>
+        </a>
+    </div>
+
+    <!-- 로그인 상태 토글 및 사용자 이름 렌더링 -->
+    <script type="module" src="/auth-ui.js"></script>
+    <script>
+      (function() {
+        try {
+          const raw = localStorage.getItem('currentUser');
+          if (!raw) return;
+          const user = JSON.parse(raw);
+          const nameEl = document.getElementById('user-name');
+          if (nameEl && user && user.name) nameEl.textContent = `${user.name}님`;
+        } catch (e) {
+          console.warn('사용자 이름 표시 실패', e);
+        }
+      })();
+    </script>
+</body>
+</html>

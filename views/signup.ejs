@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Travel Register' %></title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="/asset/style-register-fixprofile.css">
+</head>
+<body>
+    <header class="top-header">
+        <a href="/login" class="logo">
+            <i class="fas fa-plane-departure"></i> 
+            <span class="logo-text">Travel</span>
+        </a>
+    </header>
+    <div class="bg-icon">
+        <i class="fas fa-plane"></i>
+    </div>
+    <div class="register-design">
+        <div class="register-box">
+            <h1>회원가입</h1>
+            <% if (error) { %>
+              <div class="alert" id="error-msg"><%= error %></div>
+            <% } %>
+            <form id="signup-form" method="POST">
+                <input type="text" id="name" name="name" placeholder="이름" value="<%= form?.name || '' %>" required>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled <%= form?.gender ? '' : 'selected' %>>성별 선택</option>
+                    <option value="남" <%= form?.gender === '남' ? 'selected' : '' %>>남성</option>
+                    <option value="여" <%= form?.gender === '여' ? 'selected' : '' %>>여성</option>
+                </select>
+                <select id="country" name="country" required>
+                    <option value="" disabled <%= form?.country ? '' : 'selected' %>>선호 국가 선택</option>
+                    <% (countries || []).forEach((c) => { %>
+                        <option value="<%= c %>" <%= form?.country === c ? 'selected' : '' %>><%= c %></option>
+                    <% }); %>
+                </select>
+                <input type="email" id="email" name="email" placeholder="이메일" value="<%= form?.email || '' %>" required>
+                <input type="text" id="username" placeholder="사용하실 ID를 입력하세요" autocomplete="off">
+                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                <button type="button" id="signup-btn" class="register-btn">가입하기</button>
+            </form>
+            <div class="back-link">
+                <a href="/login">← 로그인화면으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/firebase-client.js"></script>
+    <script type="module" src="/signup.js"></script>
+</body>
+</html>

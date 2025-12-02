@@ -1,0 +1,269 @@
+body 
+{
+    background-color: #faf9f1;
+    margin: 0;
+    overflow: hidden;
+}
+
+.bg-icon 
+{
+    position: absolute;
+    bottom: -350px;
+    left: -150px;
+    font-size: 1000px;
+    color: #005eff;
+    opacity: 0.1;
+    transform: rotate(-40deg);
+    pointer-events: none;
+    z-index: -1;
+}
+
+header 
+{
+    height: 50px;
+    background-color: #005eff;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.title
+{
+    padding: 20px 0 0 365px;
+} 
+
+.logo
+{  
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo-text 
+{
+    padding-left: 10px; 
+}
+
+.header-right
+{
+    display: flex;
+    gap: 10px;
+}
+
+.header-btn 
+{
+    background-color: #ffffff;
+    color: #005eff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.save-btn:hover
+{
+    background-color:#3e85ff;
+    color:#ffffff;
+}
+
+.delete-btn:hover
+{
+    background-color:red;
+    color:#ffffff;
+}
+
+.write-container 
+{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 35px 20px;
+    padding-bottom: 100px;
+}
+
+.plan-form 
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.left-panel 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label
+{
+    font-size: 16px;
+    font-weight: 700;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+/* 점(bullet) 포인트 디자인 */
+.form-group label::before 
+{
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #005eff;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+input,
+select,
+textarea 
+{
+    padding: 14px;
+    font-size: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+textarea 
+{
+    resize: vertical;
+}
+
+/* 입력칸을 눌렀을 때: 반응형 디자인 */
+input:focus, select:focus, textarea:focus 
+{
+    border-color: #005eff;
+    background-color: #ffffff;
+}
+
+/* 인원 입력창 (숫자 + 텍스트) */
+.input-with-text 
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-with-text input 
+{
+    width: 80px;
+    text-align: center;
+}
+
+.unit-text 
+{
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+}
+
+
+/* === 오른쪽 패널 (경로 설정) === */
+.right-panel 
+{
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid #d0d0d0;
+    padding-left: 60px;
+}
+
+.section-title 
+{
+    font-size: 18px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.route-list 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 개별 방문지 아이템 */
+.route-item
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 여행지 번호 */
+.route-index 
+{
+    font-size: 18px;
+    font-weight: 900;
+    color: #005eff;
+    width: 20px;
+    text-align: center;
+}
+
+/* 여행지 입력 */
+.route-input 
+{
+    flex: 1;
+    border: 1px solid #dddddd;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+/* 여행지 입력: 화살표 아이콘 */
+.route-arrow 
+{
+    display: flex;
+    justify-content: center;
+    color: #d0d0d0;
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+/* 추가 버튼 */
+.btn-add-route 
+{
+    margin-top: 40px;
+    padding: 12px;
+    background-color: #005eff;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-add-route:hover 
+{
+    background-color: #0046be;
+    color: #ffffff;
+}
