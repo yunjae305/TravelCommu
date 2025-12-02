@@ -8,7 +8,8 @@ import {
   showWriteForm,
   createPlanner,
   FixProfile,
-  requestJoin
+  requestJoin,
+  showTripList
 } from '../controllers/travelController.js';
 
 const router = express.Router();
@@ -22,5 +23,6 @@ router.get('/write', showWriteForm);
 router.get('/profile-fix', FixProfile);
 router.post('/planner', createPlanner);
 router.post('/trips/:id/request', requestJoin);
+router.get(['/trip-list', '/trips/list'], showTripList);
 
 export default router;
