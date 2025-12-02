@@ -30,6 +30,15 @@ loginBtn.addEventListener('click', async (e) => {
 
         if(password === userData.password)
         {
+            // 로그인 성공 시 작성자/프로필 정보 저장
+            localStorage.setItem('currentUser', JSON.stringify({
+              userId: id,               // 로그인용 아이디
+              name: userData.name || '',
+              email: userData.email || '',
+              country: userData.country || '',
+              gender: userData.gender || '',
+            }));
+
             alert(`${userData.name}님 환영합니다!`);
             window.location.href = '/home';
         }

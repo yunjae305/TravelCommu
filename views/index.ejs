@@ -52,7 +52,7 @@
                 ]; %>
                 <% if ((trips || []).length) { %>
                   <% (trips || []).slice(0, 4).forEach((trip, idx) => { %>
-                    <div class="card preference-trip-card" data-destination="<%= trip.destination || trip.country %>">
+                    <div class="card preference-trip-card" data-destination="<%= trip.destination || trip.country %>" data-author-email="<%= trip.authorEmail || '' %>">
                         <div class="card-image" style="background-image: url('<%= fallbackImages[idx % fallbackImages.length] %>');"></div>
                         <div class="card-content">
                             <span class="card-create-name">작성자: <%= trip.authorName || trip.author || '익명' %></span>
@@ -99,7 +99,7 @@
                     <i class="fas fa-pen-nib" style="color: #005eff; margin-right: 8px;"></i> 
                     <span>내가 작성한 플랜</span>
                 </h2>
-                <a href="/mypage" class="see-more">+ 더보기</a>
+                <a href="/mytrip" class="see-more">+ 더보기</a>
             </div>
             
             <div class="card-grid" id="my-plans-grid">
@@ -158,28 +158,29 @@
           const preferenceGrid = document.getElementById('preference-trips-grid');
           if (preferenceGrid && user.country) {
             const preferenceCards = preferenceGrid.querySelectorAll('.preference-trip-card');
-            const matchedCards = [];
+            let matched = 0;
 
             preferenceCards.forEach(card => {
-              const destination = card.getAttribute('data-destination');
-              // 선호국가와 destination이 일치하면 유지
-              if (destination && destination.toLowerCase().includes(user.country.toLowerCase())) {
-                matchedCards.push(card);
+              const destination = (card.getAttribute('data-destination') || '').toLowerCase();
+              const authorEmail = card.getAttribute('data-author-email') || '';
+              const isOwn = user.email && authorEmail && user.email === authorEmail;
+              const isMatch = destination.includes(user.country.toLowerCase());
+
+              if (isOwn) {
+                card.style.display = 'none';
+                return;
               }
+
+              card.style.display = isMatch ? '' : 'none';
+              if (isMatch) matched += 1;
             });
 
-            // 일치하는 카드가 있으면 화면에 유지, 없으면 모두 숨김
-            if (matchedCards.length > 0) {
+            // 매칭된 게 없으면 예시를 그대로 유지 (단, 본인 글은 계속 숨김)
+            if (matched === 0) {
               preferenceCards.forEach(card => {
-                card.style.display = 'none';
-              });
-              matchedCards.forEach(card => {
-                card.style.display = '';
-              });
-            } else {
-              // 일치하는 카드가 없으면 모든 카드 숨김
-              preferenceCards.forEach(card => {
-                card.style.display = 'none';
+                const authorEmail = card.getAttribute('data-author-email') || '';
+                const isOwn = user.email && authorEmail && user.email === authorEmail;
+                card.style.display = isOwn ? 'none' : '';
               });
             }
           }

@@ -170,3 +170,12 @@ export async function showTripList(req, res, next) {
     next(err);
   }
 }
+
+export async function showMyTrips(_req, res, next) {
+  try {
+    const trips = await TripDB.getAll();
+    res.render('mytrip', { title: '내 플랜', trips });
+  } catch (err) {
+    next(err);
+  }
+}

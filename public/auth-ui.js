@@ -9,6 +9,24 @@ function setText(id, value) {
   if (el) el.textContent = value;
 }
 
+function readCurrentUser() {
+  try {
+    const raw = localStorage.getItem('currentUser');
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    console.warn('currentUser read 실패', e);
+    return null;
+  }
+}
+
+function persistCurrentUser(info) {
+  try {
+    localStorage.setItem('currentUser', JSON.stringify(info));
+  } catch (e) {
+    console.warn('currentUser 저장 실패', e);
+  }
+}
+
 // 헬퍼: 셀렉터 대상 display 토글
 function setDisplay(selector, displayValue) {
   document.querySelectorAll(selector).forEach((node) => {
@@ -21,7 +39,7 @@ function attachLogout(logoutBtn) {
   if (!logoutBtn || logoutBtn.dataset.attached === '1') return;
   logoutBtn.addEventListener('click', async () => {
     try {
-      await signOut(auth);
+      if (auth.currentUser) await signOut(auth);
     } catch (e) {
       console.error('signOut error', e);
     } finally {
@@ -35,19 +53,30 @@ function attachLogout(logoutBtn) {
 onAuthStateChanged(auth, async (user) => {
   const loginAnchors = Array.from(document.querySelectorAll("a[href='/login']"));
   const signupAnchors = Array.from(document.querySelectorAll("a[href='/signup']"));
-  const logoutBtn = document.getElementById('logout-btn');
+  const logoutBtn = document.getElementById('logout-btn') || document.querySelector('.logout-btn');
   const headerProfile = document.getElementById('header-profile');
   const headerUserName = document.getElementById('user-name');
   const headerUserBox = document.getElementById('header-user');
 
-  if (user) {
-    const displayName =
-      user.displayName || (user.email ? user.email.split('@')[0] : '사용자');
-    const userInfo = { name: displayName, email: user.email || '' };
-    localStorage.setItem('currentUser', JSON.stringify(userInfo));
+  const storedUser = readCurrentUser();
+  const resolvedUser = user
+    ? {
+        name: user.displayName || (user.email ? user.email.split('@')[0] : '사용자'),
+        email: user.email || '',
+        country: storedUser?.country || '',
+        gender: storedUser?.gender || '',
+        id: storedUser?.id || ''
+      }
+    : storedUser;
 
-    setText('user-name', `${displayName}님`);
-    setText('profile-name', `${displayName}님`);
+  if (resolvedUser) {
+    const displayName =
+      resolvedUser.name || (resolvedUser.email ? resolvedUser.email.split('@')[0] : '사용자');
+    const userInfo = { ...resolvedUser, name: displayName };
+    persistCurrentUser(userInfo);
+
+    setText('user-name', `${userInfo.name}님`);
+    setText('profile-name', `${userInfo.name}님`);
     if (headerProfile) headerProfile.style.display = '';
     if (headerUserName) headerUserName.style.display = '';
     if (headerUserBox) headerUserBox.style.display = 'flex';

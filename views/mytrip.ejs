@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title || 'Travel List' %></title>
+    <title><%= title || 'My Trips' %></title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/asset/style-main.css">
@@ -15,7 +15,6 @@
             <span class="logo-text">Travel</span>
         </a>
 
-        <!-- 헤더 우측: 로그인 링크, 로그인 시 노출되는 프로필/로그아웃 -->
         <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
             <div id="header-user" style="display:none; gap:8px; align-items:center;">
                 <a href="/mypage" class="header-right" id="header-profile" style="display:flex; align-items:center; gap:6px;">
@@ -38,7 +37,7 @@
             <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-list-ul" style="color: #ff6b6b; margin-right: 8px;"></i>
-                    <span>여행 플랜 목록</span>
+                    <span>내가 작성한 플랜</span>
                 </h2>
                 <a href="/home" class="see-more" style="color: #005eff; cursor: pointer;">← 돌아가기</a>
             </div>
@@ -54,7 +53,7 @@
               .empty-row { text-align: center; color: #94a3b8; padding: 24px 12px; }
             </style>
 
-            <table class="trip-table">
+            <table class="trip-table" id="my-trip-table">
               <thead>
                 <tr>
                   <th style="width: 45%;">제목</th>
@@ -67,7 +66,7 @@
                 <% const hasTrips = (trips || []).length > 0; %>
                 <% if (hasTrips) { %>
                   <% (trips || []).forEach((trip) => { %>
-                    <tr>
+                    <tr class="my-trip-row" data-author-email="<%= trip.authorEmail %>">
                       <td><a class="trip-title" href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></td>
                       <td class="trip-meta"><%= typeof trip.headcount !== 'undefined' ? trip.headcount : '-' %></td>
                       <td class="trip-meta"><%= trip.authorName || trip.author || '익명' %></td>
@@ -76,7 +75,7 @@
                   <% }); %>
                 <% } else { %>
                   <tr>
-                    <td colspan="3" class="empty-row">등록된 여행 플랜이 없습니다.</td>
+                    <td colspan="4" class="empty-row">등록된 여행 플랜이 없습니다.</td>
                   </tr>
                 <% } %>
               </tbody>
@@ -84,7 +83,7 @@
         </section>
     </div>
 
-   <div class="floating-button-box">
+    <div class="floating-button-box">
         <a href="/write" class="write-item">
             <div class="write-button">
                 <i class="fas fa-pen" style="width:50px; height:50px;"></i>
@@ -93,7 +92,6 @@
         </a>
     </div>
 
-    <!-- 로그인 상태 토글 및 사용자 이름 렌더링 -->
     <script type="module" src="/auth-ui.js"></script>
     <script>
       (function() {
@@ -104,30 +102,26 @@
           const nameEl = document.getElementById('user-name');
           if (nameEl && user && user.name) nameEl.textContent = `${user.name}님`;
 
-          // ============================================
-          // 선호 여행지: 회원가입 시 입력한 선호국가와 일치하는 것만 표시
-          // ============================================
-          const preferenceGrid = document.getElementById('preference-trips-grid');
-          if (preferenceGrid && user.country) {
-            const preferenceCards = preferenceGrid.querySelectorAll('.preference-trip-card');
-            let matched = 0;
+          // 사용자 이메일과 일치하는 플랜만 보여주기
+          const userEmail = user.email;
+          const rows = Array.from(document.querySelectorAll('.my-trip-row'));
+          const tableBody = document.querySelector('#my-trip-table tbody');
 
-            preferenceCards.forEach(card => {
-              const destination = (card.getAttribute('data-destination') || '').toLowerCase();
-              const isMatch = destination.includes(user.country.toLowerCase());
-              card.style.display = isMatch ? '' : 'none';
-              if (isMatch) matched += 1;
-            });
-
-            // 매칭된 게 없으면 예시를 그대로 유지
-            if (matched === 0) {
-              preferenceCards.forEach(card => {
-                card.style.display = '';
-              });
+          if (userEmail && rows.length) {
+            const myRows = rows.filter(row => row.getAttribute('data-author-email') === userEmail);
+            if (myRows.length) {
+              tableBody.innerHTML = '';
+              myRows.forEach(row => tableBody.appendChild(row));
+            } else {
+              tableBody.innerHTML = `
+                <tr>
+                  <td colspan="4" class="empty-row">내가 작성한 플랜이 없습니다.</td>
+                </tr>
+              `;
             }
           }
         } catch (e) {
-          console.warn('사용자 정보 처리 실패', e);
+          console.warn('내 플랜 필터링 실패', e);
         }
       })();
     </script>

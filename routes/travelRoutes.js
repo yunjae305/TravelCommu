@@ -9,7 +9,8 @@ import {
   createPlanner,
   FixProfile,
   requestJoin,
-  showTripList
+  showTripList,
+  showMyTrips
 } from '../controllers/travelController.js';
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get('/trips/new', showCreateForm);
 router.post('/trips', createTrip);
 router.get('/trips/:id', showTripDetail);
 router.get('/mypage', showMyPage);
+router.get('/mytrip', showMyTrips);
 router.get('/write', showWriteForm);
 router.get('/profile-fix', FixProfile);
 router.post('/planner', createPlanner);
