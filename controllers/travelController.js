@@ -161,3 +161,12 @@ export async function requestJoin(req, res, next) {
     next(err);
   }
 }
+
+export async function showTripList(req, res, next) {
+  try {
+    const trips = await TripDB.getAll(); // 모든 여행 데이터 가져오기
+    res.render('trip-list', { title: '여행 플랜', trips }); // trip-list.ejs 렌더링
+  } catch (err) {
+    next(err);
+  }
+}
