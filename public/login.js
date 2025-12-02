@@ -40,6 +40,7 @@ loginBtn.addEventListener('click', async (e) => {
             }));
 
             alert(`${userData.name}님 환영합니다!`);
+            localStorage.setItem('user', JSON.stringify(userData));
             window.location.href = '/home';
         }
         else
