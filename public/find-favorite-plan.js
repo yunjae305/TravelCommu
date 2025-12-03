@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const currentUser = JSON.parse(storedUser);
     const myCountry = currentUser.country;
+    const myName = currentUser.name;
 
     const dbRef = ref(db);
     
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const tripData = childSnapshot.val();
                 const tripId = childSnapshot.key;     
 
-                if (tripData.destination === myCountry && displayCount < 4) {
+                if (tripData.destination === myCountry && tripData.authorName !== myName && displayCount < 4) {
                     
                     const cardHTML = `
                         <div class="card preference-trip-card" onclick="location.href='/trips/${tripId}'">

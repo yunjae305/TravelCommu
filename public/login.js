@@ -1,4 +1,4 @@
-import app from '/firebase-client.js';
+import app from './firebase-client.js';
 import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 const loginBtn = document.getElementById('login-btn');
 
@@ -32,7 +32,7 @@ loginBtn.addEventListener('click', async (e) => {
         {
             // 로그인 성공 시 작성자/프로필 정보 저장
             localStorage.setItem('currentUser', JSON.stringify({
-              userId: id,               // 로그인용 아이디
+              userId: id,
               name: userData.name || '',
               email: userData.email || '',
               country: userData.country || '',

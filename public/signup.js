@@ -46,7 +46,7 @@ signupBtn.addEventListener('click', async (e) => {
     });
 
     alert("회원가입 성공!");
-    window.location.href = '/login';
+    window.location.href = '/';
 
   } catch (error) {
     console.error("저장 실패:", error);

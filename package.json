@@ -2,7 +2,7 @@
   "name": "travel-community",
   "version": "1.0.0",
   "description": "여행 커뮤니티 앱 (Express + EJS)",
-  "type": "module",
+  "type": "commonjs",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -11,10 +11,10 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.22.1",
+    "express-async-handler": "^1.2.0",
     "firebase-admin": "^12.6.0",
     "install": "^0.13.0",
-    "morgan": "^1.10.0",
-    "nanoid": "^5.0.7"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

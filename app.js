@@ -1,12 +1,9 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import express from 'express';
-import morgan from 'morgan';
-import travelRoutes from './routes/travelRoutes.js';
-import authRoutes from './routes/authRoutes.js';
+const path = require('path');
+const express = require('express');
+const morgan = require('morgan');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// 통합된 라우터 불러오기
+const travelRoutes = require('./routes/travelRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,7 +19,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', authRoutes);
 app.use('/', travelRoutes);
 
 app.use((err, req, res, _next) => {
@@ -35,5 +31,3 @@ app.use((err, req, res, _next) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
-
-export default app;

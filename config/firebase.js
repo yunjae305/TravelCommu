@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import admin from 'firebase-admin';
+const fs = require('fs');
+const path = require('path');
+const admin = require('firebase-admin');
 
 const DEFAULT_DB_URL = 'https://travel-9bade-default-rtdb.asia-southeast1.firebasedatabase.app/';
 const serviceAccountPath =
@@ -21,4 +21,4 @@ if (!admin.apps.length) {
 }
 
 const db = admin.database();
-export default db;
+module.exports = db;

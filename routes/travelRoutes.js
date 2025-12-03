@@ -1,30 +1,33 @@
-import express from 'express';
-import {
-  listTrips,
-  showCreateForm,
-  createTrip,
-  showTripDetail,
-  showMyPage,
-  showWriteForm,
-  createPlanner,
-  FixProfile,
-  requestJoin,
-  showTripList,
-  showMyTrips
-} from '../controllers/travelController.js';
+const express = require('express');
+const viewController = require('../controllers/viewController');
+const apiController = require('../controllers/apiController');
 
 const router = express.Router();
 
-router.get(['/home', '/trips'], listTrips);
-router.get('/trips/new', showCreateForm);
-router.post('/trips', createTrip);
-router.get('/trips/:id', showTripDetail);
-router.get('/mypage', showMyPage);
-router.get('/mytrip', showMyTrips);
-router.get('/write', showWriteForm);
-router.get('/profile-fix', FixProfile);
-router.post('/planner', createPlanner);
-router.post('/trips/:id/request', requestJoin);
-router.get(['/trip-list', '/trips/list'], showTripList);
+// ============================================================
+// [View] 화면 렌더링 (GET 요청) - viewController가 담당
+// ============================================================
 
-export default router;
+router.get('/', viewController.showLoginPage);
+router.get('/home', viewController.showMainPage);
+
+router.get('/signup', viewController.showSignupPage);
+router.get('/profile-fix', viewController.showProfileFixPage);
+
+router.get('/mypage', viewController.showMyPage);
+router.get('/mytrip', viewController.showMyTripsPage);
+
+router.get('/trip-list', viewController.showTripListPage);
+
+router.get('/write', viewController.showWritePage);
+
+router.get('/trips/:id', viewController.showDetailPage);
+
+
+// ============================================================
+// [API] 데이터 처리 (POST 요청) - apiController가 담당
+// ============================================================
+
+router.post('/planner', apiController.createPlanner);
+
+module.exports = router;
