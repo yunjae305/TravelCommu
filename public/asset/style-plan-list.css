@@ -1,0 +1,247 @@
+body 
+{
+    background-color: #faf9f1;
+    margin: 0;
+    overflow: hidden;
+}
+
+.bg-icon 
+{
+    position: absolute;
+    bottom: -250px;
+    right: -100px;
+    font-size: 1000px;
+    color: #005eff;
+    opacity: 0.1;
+    transform: rotate(210deg);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* === 헤더 스타일 === */
+header
+{
+    height: 50px;
+    background-color: #005eff;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.logo 
+{  
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo-text
+{
+    padding-left: 10px;
+}
+
+.header-right
+{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logout-btn {
+    background-color: #ffffff;
+    color: #005eff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    background-color: red;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.user-profile
+{
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: opacity 0.2s;
+}
+
+.user-profile i 
+{
+    text-decoration: none;
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+/* === 메인 컨텐츠 영역 === */
+.main-container
+{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    padding-bottom: 100px;
+}
+
+.content-section 
+{
+    margin-bottom: 60px;
+}
+
+.section-header 
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.section-title
+{
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.see-more
+{
+    font-size: 14px;
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.see-more:hover 
+{
+    color: #005eff;
+}
+
+.floating-button-box
+{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+}
+
+.write-item 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.write-button 
+{
+    width: 90px;
+    height: 90px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #005eff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #f0f0f0;
+}
+
+.write-button i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    line-height: 1;
+}
+
+.write-button:hover
+{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.write-label
+{
+    margin-top: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #000000;
+    text-shadow: 1px 1px 0 #ffffff;
+}
+
+
+.trip-table 
+{ 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.trip-table th, .trip-table td 
+{ 
+    padding: 14px 12px; 
+    text-align: left; 
+    border-bottom: 1px solid #e5e7eb; 
+}
+              
+.trip-table th 
+{ 
+    background: #f8fafc; 
+    color: #334155; font-weight: 700; 
+}
+
+.trip-table tbody tr:hover 
+{ 
+    background: #f1f5f9; 
+}
+
+.trip-title 
+{ 
+    color: #0f172a; 
+    font-weight: 600; 
+    text-decoration: none; 
+}
+
+.trip-title:hover 
+{ 
+    text-decoration: underline; 
+}
+
+.trip-meta 
+{ 
+    color: #475569; 
+    font-size: 14px; 
+}
+
+.empty-row 
+{ 
+    text-align: center; 
+    color: #94a3b8; 
+    padding: 24px 12px; 
+}

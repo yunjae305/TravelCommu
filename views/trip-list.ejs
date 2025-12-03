@@ -6,7 +6,7 @@
     <title><%= title || 'Travel List' %></title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/asset/style-main.css">
+    <link rel="stylesheet" href="/asset/style-plan-list.css">
 </head>
 <body>
     <header class="top-header">
@@ -42,17 +42,6 @@
                 </h2>
                 <a href="/home" class="see-more" style="color: #005eff; cursor: pointer;">← 돌아가기</a>
             </div>
-
-            <style>
-              .trip-table { width: 100%; border-collapse: collapse; }
-              .trip-table th, .trip-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-              .trip-table th { background: #f8fafc; color: #334155; font-weight: 700; }
-              .trip-table tbody tr:hover { background: #f1f5f9; }
-              .trip-title { color: #0f172a; font-weight: 600; text-decoration: none; }
-              .trip-title:hover { text-decoration: underline; }
-              .trip-meta { color: #475569; font-size: 14px; }
-              .empty-row { text-align: center; color: #94a3b8; padding: 24px 12px; }
-            </style>
 
             <table class="trip-table">
               <thead>

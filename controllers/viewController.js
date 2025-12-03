@@ -87,6 +87,5 @@ module.exports = {
     showLoginPage,
     showSignupPage,
     showWritePage,
-    showCreatePage,
     showProfileFixPage
 };
