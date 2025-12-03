@@ -1,6 +1,5 @@
 const TripDB = require('../models/tripModel');
 
-//메인 페이지
 //여행 플랜 상세 페이지
 const showDetailPage = async (req, res) => {
     try {
@@ -21,7 +20,7 @@ const showDetailPage = async (req, res) => {
     }
 };
 
-// 3. 마이페이지
+//마이페이지
 const showMyPage = async (req, res) => {
     try {
         const allTrips = await TripDB.getAll();
@@ -33,7 +32,7 @@ const showMyPage = async (req, res) => {
     }
 };
 
-// 4. 내 플랜 전체 보기
+//내 플랜 전체 보기
 const showMyTripsPage = async (req, res) => {
     try {
         const trips = await TripDB.getAll();
@@ -44,7 +43,7 @@ const showMyTripsPage = async (req, res) => {
     }
 };
 
-// 5. 전체 여행 목록 보기
+//전체 여행 목록 보기
 const showTripListPage = async (req, res) => {
     try {
         const trips = await TripDB.getAll();
@@ -64,7 +63,6 @@ const showMainPage = async (req, res) => {
     res.render('index', { title: '여행 커뮤니티'});
 };
 
-
 const showSignupPage = (req, res) => {
     res.render('signup', { title: '회원가입', error: null, form: {} });
 };
@@ -77,7 +75,7 @@ const showProfileFixPage = (req, res) => {
     res.render('profile-fix', { title: '회원정보 수정'});
 };
 
-// [핵심] module.exports로 한 번에 내보내기
+//module.exports로 내보내기
 module.exports = {
     showMainPage,
     showDetailPage,

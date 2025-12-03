@@ -6,7 +6,7 @@
     <title><%= title || 'My Trips' %></title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/asset/style-main.css">
+    <link rel="stylesheet" href="/asset/style-plan-list.css">
 </head>
 <body>
     <header class="top-header">
@@ -36,22 +36,11 @@
         <section class="content-section">
             <div class="section-header">
                 <h2 class="section-title">
-                    <i class="fas fa-list-ul" style="color: #ff6b6b; margin-right: 8px;"></i>
+                    <i class="fas fa-pen-nib" style="color: #005eff; margin-right: 8px;"></i> 
                     <span>내가 작성한 플랜</span>
                 </h2>
                 <a href="/home" class="see-more" style="color: #005eff; cursor: pointer;">← 돌아가기</a>
             </div>
-
-            <style>
-              .trip-table { width: 100%; border-collapse: collapse; }
-              .trip-table th, .trip-table td { padding: 14px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-              .trip-table th { background: #f8fafc; color: #334155; font-weight: 700; }
-              .trip-table tbody tr:hover { background: #f1f5f9; }
-              .trip-title { color: #0f172a; font-weight: 600; text-decoration: none; }
-              .trip-title:hover { text-decoration: underline; }
-              .trip-meta { color: #475569; font-size: 14px; }
-              .empty-row { text-align: center; color: #94a3b8; padding: 24px 12px; }
-            </style>
 
             <table class="trip-table" id="my-trip-table">
               <thead>
@@ -62,22 +51,7 @@
                   <th style="width: 20%;">작성일</th>
                 </tr>
               </thead>
-              <tbody>
-                <% const hasTrips = (trips || []).length > 0; %>
-                <% if (hasTrips) { %>
-                  <% (trips || []).forEach((trip) => { %>
-                    <tr class="my-trip-row" data-author-email="<%= trip.authorEmail %>">
-                      <td><a class="trip-title" href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></td>
-                      <td class="trip-meta"><%= typeof trip.headcount !== 'undefined' ? trip.headcount : '-' %></td>
-                      <td class="trip-meta"><%= trip.authorName || trip.author || '익명' %></td>
-                      <td class="trip-meta"><%= trip.createdAt ? new Date(trip.createdAt).toLocaleDateString('ko-KR') : '-' %></td>
-                    </tr>
-                  <% }); %>
-                <% } else { %>
-                  <tr>
-                    <td colspan="4" class="empty-row">등록된 여행 플랜이 없습니다.</td>
-                  </tr>
-                <% } %>
+              <tbody id="my-plans-body">
               </tbody>
             </table>
         </section>
@@ -93,37 +67,6 @@
     </div>
 
     <script type="module" src="/auth-ui.js"></script>
-    <script>
-      (function() {
-        try {
-          const raw = localStorage.getItem('currentUser');
-          if (!raw) return;
-          const user = JSON.parse(raw);
-          const nameEl = document.getElementById('user-name');
-          if (nameEl && user && user.name) nameEl.textContent = `${user.name}님`;
-
-          // 사용자 이메일과 일치하는 플랜만 보여주기
-          const userEmail = user.email;
-          const rows = Array.from(document.querySelectorAll('.my-trip-row'));
-          const tableBody = document.querySelector('#my-trip-table tbody');
-
-          if (userEmail && rows.length) {
-            const myRows = rows.filter(row => row.getAttribute('data-author-email') === userEmail);
-            if (myRows.length) {
-              tableBody.innerHTML = '';
-              myRows.forEach(row => tableBody.appendChild(row));
-            } else {
-              tableBody.innerHTML = `
-                <tr>
-                  <td colspan="4" class="empty-row">내가 작성한 플랜이 없습니다.</td>
-                </tr>
-              `;
-            }
-          }
-        } catch (e) {
-          console.warn('내 플랜 필터링 실패', e);
-        }
-      })();
-    </script>
+    <script type="module" src="/find-my-plan-list.js"></script>
   </body>
 </html>

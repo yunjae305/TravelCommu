@@ -29,5 +29,7 @@ router.get('/trips/:id', viewController.showDetailPage);
 // ============================================================
 
 router.post('/planner', apiController.createPlanner);
+router.post('/api/trips/favorite', apiController.getFavoritePlans);
+router.post('/api/trips/myplans', apiController.getMyPlans);
 
 module.exports = router;

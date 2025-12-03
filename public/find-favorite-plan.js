@@ -1,62 +1,55 @@
-import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
-import app from '/firebase-client.js';
-
-const db = getDatabase(app);
-
-// 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', async () => {
-    
     const gridContainer = document.getElementById('preference-trips-grid');
-    
     const storedUser = localStorage.getItem('user');
 
-    const currentUser = JSON.parse(storedUser);
-    const myCountry = currentUser.country;
-    const myName = currentUser.name;
+    //비로그인 예외 처리 추가
+    if (!storedUser) {
+        gridContainer.innerHTML = '<p style="padding:20px;">로그인이 필요합니다.</p>';
+        return;
+    }
 
-    const dbRef = ref(db);
+    const currentUser = JSON.parse(storedUser);
     
     try 
     {
-        const snapshot = await get(child(dbRef, 'trips'));
+       const response = await fetch('/api/trips/favorite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                myCountry: currentUser.country, 
+                myName: currentUser.name
+            })
+        });
 
         let displayCount = 0; 
+        const plans = await response.json();
 
-            snapshot.forEach((childSnapshot) => {
-                const tripData = childSnapshot.val();
-                const tripId = childSnapshot.key;     
-
-                if (tripData.destination === myCountry && tripData.authorName !== myName && displayCount < 4) {
+        if (plans.length > 0) {
+            plans.forEach(trip => {
+                if(displayCount < 4)
+                {
+                    const bgImg = 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3';
                     
                     const cardHTML = `
-                        <div class="card preference-trip-card" onclick="location.href='/trips/${tripId}'">
-                            <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3');"></div>
+                        <div class="card" onclick="location.href='/trips/${trip.id}'">
+                            <div class="card-image" style="background-image: url('${bgImg}');"></div>
                             <div class="card-content">
-                                <span class="card-create-name">작성자: ${tripData.authorName || '익명'}</span>
-                                <h3 class="card-name">${tripData.topic || '제목 없음'}</h3>
+                                <span class="card-create-name">작성자: ${trip.authorName}</span>
+                                <h3 class="card-name">${trip.topic}</h3>
                             </div>
                         </div>
                     `;
                     
                     gridContainer.insertAdjacentHTML('beforeend', cardHTML);
-                    
-                    displayCount++; 
+                    displayCount++;
                 }
             });
-            
-            if (displayCount === 0) {
-                const cardHTML = `
-                    <div class="card">
-                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');"></div>
-                        <div class="card-content">
-                            <span class="card-create-name">선호국가와 관련된 플랜이 없습니다</span>
-                            <h3 class="card-name">새로운 플랜을 작성해보세요</h3>
-                        </div>
-                    </div>
-                `;
-                gridContainer.insertAdjacentHTML('beforeend', cardHTML);
-            }
+        } 
+        else 
+        {
+            gridContainer.innerHTML = `<p style="padding:20px;">'${currentUser.country}' 관련 여행 플랜이 없습니다.</p>`;
+        }
     } catch (error) {
-        console.error("DB 조회 실패:", error);
+        console.error("플랜 로딩 실패:", error);
     }
 });

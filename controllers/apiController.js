@@ -25,5 +25,49 @@ const createPlanner = asyncHandler(async (req, res) => {
     res.redirect(`/trips/${newTrip.id}`);
 });
 
+//선호 국가 여행 플래너 보기
+const getFavoritePlans = asyncHandler(async (req, res) => {
+    const { myCountry, myName } = req.body;
+
+    if(!myCountry) 
+    {
+        return res.json([]);
+    }
+
+    const allTrips = await TripDB.getAll();
+    const favorites = []
+
+    allTrips.forEach((planner) => {
+        if (planner.destination === myCountry && planner.authorName !== myName) 
+        {
+            favorites.push(planner);
+        }
+    });
+
+    res.json(favorites);
+});
+
+//내가 작성한 플랜 가져오기
+const getMyPlans = asyncHandler(async (req, res) => {
+    const { myEmail, myName } = req.body;
+
+    if(!myEmail && !myName)
+    {
+        return res.json([]);
+    }
+
+    const allTrips = await TripDB.getAll();
+    const myplans = [];
+
+    allTrips.forEach((planner) => {
+        if(planner.authorName === myName && planner.authorEmail === myEmail)
+        {
+            myplans.push(planner);
+        }
+    });
+
+    res.json(myplans);
+});
+
 //module.exports로 내보내기
-module.exports = { createPlanner };
+module.exports = { createPlanner, getFavoritePlans, getMyPlans };
