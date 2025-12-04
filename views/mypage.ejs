@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/asset/style-mypage.css">
 </head>
 <body>
-    <header class="top-header">
+<header class="top-header">
         <div class="header-left">
             <a href="/home" class="logo">
                 <i class="fas fa-plane-departure"></i> 
@@ -24,8 +24,8 @@
                 <i class="fas fa-arrow-left"></i> 
                 <span>이전</span>
             </button>
-            <button class="header-btn logout-btn" onclick="location.href='/login'">
-                <span>로그아웃</span>
+            <button class="header-btn logout-btn" onclick="location.href='/logout'">
+               <span>로그아웃</span>
             </button>
         </div>
     </header>
@@ -39,7 +39,7 @@
             <div class="profile-info">
                 <span class="profile-img"></span>
                 <div class="profile-text">
-                    <h2>안녕하세요,<br><strong id="profile-name">OOO님</strong></h2>
+                    <h2>안녕하세요,<br><strong><%= user.name %>님</strong></h2>
                 </div>
             </div>
             <a href="/profile-fix" class="change-profile">
@@ -54,24 +54,28 @@
           'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
           'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
         ]; %>
-        <% const joinedTrips = (trips || []).slice(0, Math.ceil((trips || []).length / 2)); %>
-        <% const writtenTrips = (trips || []).slice(Math.ceil((trips || []).length / 2)); %>
 
         <section class="list-section">
-            <h3 class="section-title">참여하고 있는 플래너</h3>
+            <div class="section-header">
+                <h3 class="section-title">참여하고 있는 플래너</h3>
+                <a href="#" class="see-more" onclick="alert('준비 중인 기능입니다.'); return false;">+ 더보기</a>
+            </div>
+
             <div class="card-list">
-                <% if (joinedTrips.length) { %>
-                  <% joinedTrips.forEach((trip, idx) => { %>
-                    <div class="list-card">
-                        <div class="card-img" style="background-image: url('<%= fallbackImages[idx % fallbackImages.length] %>');"></div>
-                        <div class="card-info">
-                            <h4><a href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></h4>
-                            <p><%= trip.destination || '여행지 미정' %></p>
+                <% if (joinedPlans && joinedPlans.length > 0) { %>
+                  <% joinedPlans.forEach((trip, index) => { %>
+                    <% if (index < 3) { %>
+                        <div class="list-card" onclick="location.href='/detail/<%= trip.id %>'">
+                            <div class="card-img" style="background-image: url('<%= fallbackImages[index % fallbackImages.length] %>');"></div>
+                            <div class="card-info">
+                                <h4><%= trip.topic || trip.title %></h4>
+                                <p><%= trip.destination || '여행지 미정' %></p>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
                   <% }); %>
                 <% } else { %>
-                  <div class="list-card">
+                  <div class="list-card" style="cursor: default;">
                     <div class="card-img" style="background: linear-gradient(to left, #fbc2eb 0%, #a6c1ee 100%);"></div>
                     <div class="card-info">
                         <h4>참여중인 플래너가 없습니다 😱</h4>
@@ -83,23 +87,29 @@
         </section>
 
         <section class="list-section">
-            <h3 class="section-title">작성한 플래너</h3>
+            <div class="section-header">
+                <h3 class="section-title">작성한 플래너</h3>
+                <a href="/mytrip" class="see-more">+ 더보기</a>
+            </div>
+
             <div class="card-list">
-                <% if (writtenTrips.length) { %>
-                  <% writtenTrips.forEach((trip, idx) => { %>
-                    <div class="list-card">
-                        <div class="card-img" style="background-image: url('<%= fallbackImages[(idx + 1) % fallbackImages.length] %>');"></div>
-                        <div class="card-info">
-                            <h4><a href="/detail-myplans/<%= trip.id %>"><%= trip.topic || trip.title %></a></h4>
-                            <p class="date-text">
-                              <i class="far fa-clock"></i> 
-                              <%= trip.createdAt ? new Date(trip.createdAt).toLocaleDateString() : '날짜 미정' %>
-                            </p>
+                <% if (myPlans && myPlans.length > 0) { %>
+                  <% myPlans.forEach((trip, index) => { %>
+                    <% if (index < 3) { %>
+                        <div class="list-card" onclick="location.href='/detail-myplan/<%= trip.id %>'">
+                            <div class="card-img" style="background-image: url('<%= fallbackImages[(index + 1) % fallbackImages.length] %>');"></div>
+                            <div class="card-info">
+                                <h4><%= trip.topic || trip.title %></h4>
+                                <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                                    <i class="far fa-clock"></i> 
+                                    <%= trip.createdAt ? new Date(trip.createdAt).toLocaleDateString() : '날짜 미정' %>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
                   <% }); %>
                 <% } else { %>
-                  <div class="list-card">
+                  <div class="list-card" style="cursor: default;">
                       <div class="card-img" style="background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);"></div>
                       <div class="card-info">
                           <h4>작성한 플래너가 없습니다 😭</h4>
@@ -109,22 +119,6 @@
                 <% } %>
             </div>
         </section>
-
     </div>
-    <script>
-      (function() {
-        try {
-          const raw = localStorage.getItem('currentUser');
-          if (!raw) return;
-          const user = JSON.parse(raw);
-          const el = document.getElementById('profile-name');
-          if (el && user && user.name) {
-            el.textContent = `${user.name}님`;
-          }
-        } catch (e) {
-          console.warn('이름 표시 실패', e);
-        }
-      })();
-    </script>
 </body>
 </html>

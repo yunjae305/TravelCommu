@@ -30,6 +30,10 @@ router.get('/detail-myplan/:id', viewController.showMyDetailPage);
 // [API] 데이터 처리 (POST 요청) - apiController가 담당
 // ============================================================
 
+//로그인, 로그아웃 요청
+router.post('/login', apiController.login);
+router.get('/logout', apiController.logout);
+
 //플래너 생성/삭제 라우터
 router.post('/planner', apiController.createPlanner);
 router.post('/trips/:id/delete', apiController.deletePlanner);
@@ -41,5 +45,8 @@ router.post('/trips/:id/leave', apiController.leavePlanner);
 //local에 저장되어있는 User정보를 넘겨받은 후, 해당 User가 작성한 플랜을 가져오는 라우터
 router.post('/api/trips/favorite', apiController.getFavoritePlans);
 router.post('/api/trips/myplans', apiController.getMyPlans);
+
+//로그인한 유저가 참여하고 있는 플랜을 가져오는 라우터
+router.post('/api/trips/joined', apiController.getJoinedPlans);
 
 module.exports = router;

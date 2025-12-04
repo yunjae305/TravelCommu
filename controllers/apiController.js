@@ -1,6 +1,40 @@
 const asyncHandler = require('express-async-handler');
 const TripDB = require('../models/tripModel');
 const UserDB = require('../models/userModel');
+const db = require('../config/firebase');
+
+const login = asyncHandler(async (req, res) => {
+    const { id, password } = req.body;
+
+    //DB에서 유저 찾기
+    const userSnapshot = await db.ref(`users/${id}`).once('value');
+    
+    if (!userSnapshot.exists()) 
+    {
+        return res.status(401).json({ success: false, message: "존재하지 않는 아이디입니다." });
+    }
+
+    const userData = userSnapshot.val();
+
+    //비밀번호 확인
+    if (userData.password !== password) 
+    {
+        return res.status(401).json({ success: false, message: "비밀번호가 일치하지 않습니다." });
+    }
+
+    //쿠키에 유저 정보 저장
+    res.cookie('user', JSON.stringify(userData), {
+        maxAge: 24 * 60 * 60 * 1000 // 1일 유효
+    });
+
+    res.json({ success: true, message: "로그인 성공!" });
+});
+
+//로그아웃 처리 (쿠키 삭제)
+const logout = (req, res) => {
+    res.clearCookie('user');
+    res.redirect('/');
+};
 
 //플래너 작성 처리
 const createPlanner = asyncHandler(async (req, res) => {
@@ -76,6 +110,29 @@ const getMyPlans = asyncHandler(async (req, res) => {
     res.json(myplans);
 });
 
+//내가 참여중인 플랜 가져오기
+const getJoinedPlans = asyncHandler(async (req, res) => {
+    const { userId } = req.body;
+
+    if(!userId)
+    {
+        return res.json([]);
+    }
+
+    const allTrips = await TripDB.getAll();
+    const joined = [];
+
+    allTrips.forEach((planner) => {
+        // 참가자 목록에 내 ID가 있고, 내가 작성자가 아닌 경우
+        if (planner.participants.includes(userId)) 
+        {
+            joined.push(planner);
+        }
+    });
+
+    res.json(joined);
+});
+
 //플래너 참가 처리
 const joinPlanner = asyncHandler(async (req, res) => {
     const tripId = req.params.id;
@@ -126,6 +183,9 @@ module.exports = {
     deletePlanner,
     getFavoritePlans, 
     getMyPlans,
+    getJoinedPlans,
     joinPlanner,
-    leavePlanner
+    leavePlanner,
+    login,
+    logout
  };

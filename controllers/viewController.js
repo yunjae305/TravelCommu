@@ -42,13 +42,52 @@ const showMyDetailPage = async (req, res) => {
 
 //마이페이지
 const showMyPage = async (req, res) => {
-    try {
+    try 
+    {
+        //쿠키에서 유저 정보 꺼내기
+        const userCookie = req.cookies.user;
+        
+        if (!userCookie) 
+        {
+            //비로그인 상태면 로그인 페이지로 튕겨내기
+            return res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
+        }
+
+        const user = JSON.parse(userCookie);
+
+        //DB에서 모든 플랜 가져오기
         const allTrips = await TripDB.getAll();
-        const trips = allTrips.slice(0, 3); // 상위 3개만
-        res.render('mypage', { title: '마이페이지', trips });
-    } catch (error) {
+
+        //서버에서 필터링
+        const myPlans = [];
+        const joinedPlans = [];
+
+        allTrips.forEach(u => {
+            //내가 작성한 플랜인지 확인
+            if (u.authorName === user.name && u.authorEmail === user.email) 
+            {
+                myPlans.push(u);
+            }
+            
+            // 내가 참여한 플랜인지 확인
+            if (u.participants.includes(user.userId))
+            {
+                joinedPlans.push(u);
+            }
+        });
+
+        //데이터 담아서 렌더링
+        res.render('mypage', { 
+            title: '마이페이지', 
+            user: user, 
+            myPlans: myPlans,
+            joinedPlans: joinedPlans
+        });
+
+    } 
+    catch (error) 
+    {
         console.error(error);
-        res.status(500).send("마이페이지 로딩 실패");
     }
 };
 

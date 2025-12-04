@@ -159,6 +159,19 @@ header
     margin-bottom: 60px;
 }
 
+.section-header 
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header .section-title 
+{
+    margin-bottom: 0; 
+}
+
 .section-title 
 {
     font-size: 22px;
@@ -240,4 +253,17 @@ header
 .card-actions 
 {
     margin-left: 20px;
+}
+
+.see-more
+{
+    font-size: 14px;
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.see-more:hover 
+{
+    color: #005eff;
 }

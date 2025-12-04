@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 // 통합된 라우터 불러오기
 const travelRoutes = require('./routes/travelRoutes');
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 

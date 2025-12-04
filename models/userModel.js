@@ -1,7 +1,7 @@
 const db = require('../config/firebase');
 const usersRef = db.ref('users');
 
-// 1. 유저 정보 저장 (회원가입/로그인 시)
+//유저 정보 저장 (회원가입/로그인 시)
 const saveUser = async (userData) => {
     // uid가 없으면 저장 불가
     if (!userData.uid) return null;
