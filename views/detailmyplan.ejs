@@ -19,16 +19,22 @@
     </div>
     <div class="header-right">
         <button class="header-btn back-btn" onclick="location.href='/home'">
-            <i class="fas fa-times"></i> 
-            <span>취소</span>
+            <div class="cancel-profile">
+                <i class="fas fa-times"></i> 
+                <span>취소</span>
+            </div>
         </button>
         <button class="header-btn delete-btn" onclick="deleteTrip('<%= trip.id %>')">
-            <i class="fas fa-trash-alt"></i>
-            <span>플랜 삭제</span>
+            <div class="delete-profile">
+                <i class="fas fa-trash-alt"></i>
+                <span>플랜 삭제</span>
+            </div>
         </button>
         <button class="header-btn save-btn" type="submit" class="save-btn" form="edit-form">
-            <i class="fas fa-check"></i> 
-            <span>수정 완료</span>
+            <div class="check-profile">
+                <i class="fas fa-check"></i> 
+                <span>수정 완료</span>
+            </div>
         </button>
     </div>
   </header>

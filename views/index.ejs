@@ -18,13 +18,18 @@
         <!-- 헤더 우측: 로그인 링크, 로그인 시 노출되는 프로필/로그아웃 -->
         <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
             <div id="header-user" style="display: flex; gap:8px; align-items:center;">
-                <a href="/mypage" class="header-right" id="header-profile" style="text-decoration:none; display:flex; align-items:center; gap:6px;">
+                <button class="logout-btn" onclick="location.href='/logout'">
+                    <div class="logout-profile">
+                        <i class="fas fa-lock-open" style="margin-right: 5px;"></i>
+                        <span>로그아웃</span>
+                    </div>
+                </button>
+                <button class="header-right profile-btn" id="header-profile" onclick="location.href='/mypage'">
                     <div class="user-profile">
                         <i class="fas fa-user-circle"></i>
                         <span class="user-name" id="user-name" style="text-decoration:none;"><%= user.name %>님</span>
                     </div>
-                </a>
-                <button class="logout-btn" onclick="location.href='/logout'">로그아웃</button>
+                </button>
             </div>
         </div>
     </header>
@@ -96,9 +101,11 @@
                     <% }); %>
                 <% } else { %>
                     <div class="card" style="cursor: default;">
-                        <div class="card-image" style="background: linear-gradient(to left, #3c6cf2, #a1c2ff);"></div>
+                        <div class="card-image" style="background: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);">
+                            <p style="font-size: 50px">😎</p>
+                        </div>
                         <div class="card-content">
-                            <h3 class="card-name">새로운 플랜을 작성해보세요 😎</h3>
+                            <h3 class="card-name">새로운 플랜을 작성해보세요!</h3>
                         </div>
                     </div>
                 <% } %>
@@ -108,7 +115,7 @@
         <div class="floating-button-box">
             <a href="/write" class="write-item">
                 <div class="write-button">
-                    <i class="fas fa-pen" style="width:50px; height:50px;"></i> 
+                    <i class="fas fa-pen"></i> 
                 </div>
                 <span class="write-label">플래너 작성</span>
             </a>

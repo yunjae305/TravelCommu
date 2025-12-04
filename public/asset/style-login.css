@@ -10,7 +10,7 @@ body
     font-family: 'Noto Sans KR', sans-serif;
     height: 100vh; 
     display: flex;
-    overflow: hidden; /* 스크롤 방지 */
+    overflow: hidden;
 }
 
 .left-panel 
@@ -25,7 +25,7 @@ body
 .top-section 
 {
     height: 60%;
-    background-color: #005EFF;
+    background: linear-gradient(to top, #4481eb 0%, #04befe 100%);;
     color: white;
     padding: 40px; 
     display: flex;
@@ -123,7 +123,8 @@ body
 
 .login-btn:hover 
 {
-    background-color: #004ecc;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #004ac2;
 }
 
 .links 

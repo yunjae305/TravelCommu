@@ -68,14 +68,53 @@ header
 
 .back-btn:hover 
 {
+    transition: background-color 0.3s, color 0.3s;
     background-color: #3e85ff;
     color: #ffffff;
 }
 
+.logout-btn {
+    background-color: #ffffff;
+    color: #005eff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
 .logout-btn:hover
 {
-    background-color:red;
+    transition: background-color 0.3s, color 0.3s;
+    background-color:#d32f2f;
     color:#ffffff;
+}
+
+.back-profile, .logout-profile
+{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: opacity 0.2s;
+}
+
+.back-profile i
+{
+    text-decoration: none;
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+.logout-profile i
+{
+    text-decoration: none;
+    font-size: 24px;
+    margin-right: 8px;
 }
 
 .mypage-container 

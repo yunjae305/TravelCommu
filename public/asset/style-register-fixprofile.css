@@ -107,6 +107,7 @@ select:focus, select:valid
 
 .register-btn:hover
 {
+    transition: background-color 0.3s;
     background-color: #004ecc;
 }
 

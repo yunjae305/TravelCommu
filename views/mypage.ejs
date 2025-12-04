@@ -21,11 +21,16 @@
 
         <div class="header-right">
             <button class="header-btn back-btn" onclick="location.href='/home'">
-                <i class="fas fa-arrow-left"></i> 
-                <span>이전</span>
+                <div class="back-profile">
+                    <i class="fas fa-arrow-left"></i> 
+                    <span>이전</span>
+                </div>
             </button>
-            <button class="header-btn logout-btn" onclick="location.href='/logout'">
-               <span>로그아웃</span>
+            <button class="logout-btn" onclick="location.href='/logout'">
+                <div class="logout-profile">
+                    <i class="fas fa-lock-open" style="margin-right: 5px;"></i>
+                    <span>로그아웃</span>
+                </div>
             </button>
         </div>
     </header>

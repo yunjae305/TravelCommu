@@ -67,20 +67,39 @@ header
     gap: 5px;
 }
 
+.cancel-profile, .delete-profile, .check-profile, .join-profile, .leave-profile, .back-profile
+{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.cancel-profile i, .delete-profile i, .check-profile i, .join-profile i, .leave-profile i, .back-profile i
+{
+    text-decoration: none;
+    font-size: 24px;
+    margin-right: 8px;
+}
+
 .back-btn:hover 
 {
-    background-color: #3e85ff;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #d32f2f;
     color: #ffffff;
 }
 
 .join-btn:hover 
 {
+    transition: background-color 0.3s, color 0.3s;
     background-color:#21924e;
     color:#ffffff;
 }
 
 .leave-btn:hover, .delete-btn:hover 
 {
+    transition: background-color 0.3s, color 0.3s;
     background-color: #d32f2f;
     color: #ffffff;
 }
@@ -342,7 +361,7 @@ header
     
 .save-btn:hover 
 { 
-    background: #0046be;
+    background: #3e85ff;
     color: #ffffff;
 }
 

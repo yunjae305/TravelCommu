@@ -38,71 +38,75 @@
         <i class="fas fa-plane"></i>
     </div>
     
-    <div class="title">
-        <h1>새로운 여행 플래너 생성</h1>
-    </div>
     <div class="write-container">
-        <form class="plan-form" id="planner-form" action="/planner" method="POST">
-            <div class="left-panel">
-                <div class="form-group">
-                    <label for="subject">주제</label>
-                    <input id="subject" name="title" placeholder="여행 주제를 입력하세요 (예: 힐링 부산 여행)" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="country">여행국가</label>
-                    <div class="select-wrapper">
-                        <input id="country" name="location" placeholder="여행국가를 입력해주세요." required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="members">여행인원 (최대 인원)</label>
-                    <div class="input-with-text">
-                        <input id="members" name="members" type="number" placeholder="0" min="1" max="20" required>
-                        <span class="unit-text">/ 5 명</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="budget">예산</label>
-                    <div class="input-with-text">
-                        <input id="budget" name="budget" type="number" placeholder="예산을 입력하세요" min="0">
-                        <span class="unit-text">원</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">상세설명</label>
-                    <textarea id="description" name="desc" rows="8" placeholder="여행에 대한 자세한 설명을 적어주세요."></textarea>
-                </div>
-
+        <section class="planner-box">
+            
+            <div class="planner-header">
+                <h1>😎 새로운 여행 플래너</h1>
+                <p>나만의 특별한 여행 계획을 시작해보세요!</p>
             </div>
 
-            <div class="right-panel">
-                <h3 class="section-title">여행 방문지 설정</h3>
-                
-                <div class="route-list" id="route-list">
-                    <div class="route-item">
-                        <span class="route-index">1</span>
-                        <input class="route-input" placeholder="방문지">
+            <form class="plan-form" id="planner-form" action="/planner" method="POST">
+                <div class="left-panel">
+                    <div class="form-group">
+                        <label for="subject">주제</label>
+                        <input id="subject" name="title" placeholder="여행 주제를 입력하세요 (예: 힐링 부산 여행)" required>
                     </div>
 
-                    <div class="route-item">
-                        <span class="route-index">2</span>
-                        <input class="route-input" placeholder="방문지">
+                    <div class="form-group">
+                        <label for="country">여행국가</label>
+                        <div class="select-wrapper">
+                            <input id="country" name="location" placeholder="여행국가를 입력해주세요." required>
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="members">여행인원 (최대 인원)</label>
+                        <div class="input-with-text">
+                            <input id="members" name="members" type="number" placeholder="0" min="1" max="20" required>
+                            <span class="unit-text">/ 5 명</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">예산</label>
+                        <div class="input-with-text">
+                            <input id="budget" name="budget" type="number" placeholder="예산을 입력하세요" min="0">
+                            <span class="unit-text">원</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">상세설명</label>
+                        <textarea id="description" name="desc" rows="8" placeholder="여행에 대한 자세한 설명을 적어주세요."></textarea>
+                    </div>
+
                 </div>
 
-                <button class="btn-add-route" type="button" id="add-route-btn">+ 방문지 추가</button>
-            </div>
-            <input type="hidden" name="places" id="places">
-            <input type="hidden" name="authorName" id="authorName" value="<%= user.name %>">
-            <input type="hidden" name="authorEmail" id="authorEmail" value="<%= user.email %>">
-        </form>
+                <div class="right-panel">
+                    <h3 class="section-title">여행 방문지 설정</h3>
+                    
+                    <div class="route-list" id="route-list">
+                        <div class="route-item">
+                            <span class="route-index">1</span>
+                            <input class="route-input" placeholder="방문지">
+                        </div>
+
+                        <div class="route-item">
+                            <span class="route-index">2</span>
+                            <input class="route-input" placeholder="방문지">
+                        </div>
+                    </div>
+
+                    <button class="btn-add-route" type="button" id="add-route-btn">+ 방문지 추가</button>
+                </div>
+                <input type="hidden" name="places" id="places">
+                <input type="hidden" name="authorName" id="authorName" value="<%= user.name %>">
+                <input type="hidden" name="authorEmail" id="authorEmail" value="<%= user.email %>">
+            </form>
+        </section>
     </div>
 
-    <!-- User가 입력한 input폼을 합쳐서 처리하는 JS -->
     <script type="module" src="/create-plan-data-set.js"></script>
 </body>
 </html>

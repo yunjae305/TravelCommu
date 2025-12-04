@@ -20,16 +20,22 @@
     </div>
     <div class="header-right">
         <button class="header-btn back-btn" onclick="location.href='javascript:history.back();'">
+          <div class="back-profile">
             <i class="fas fa-arrow-left"></i> 
             <span>이전</span>
+          </div>
         </button>
         <button id="join-btn" class="header-btn join-btn" data-id="<%= trip.id %>" onclick="joinTrip('<%= trip.id %>')" style="display: none;">
-            <i class="fas fa-user-plus"></i> 
-            <span>참가하기</span>
+            <div class="join-profile">
+              <i class="fas fa-user-plus"></i> 
+              <span>참가하기</span>
+            </div>
         </button>
         <button id="leave-btn" class="header-btn leave-btn" data-id="<%= trip.id %>" onclick="leaveTrip('<%= trip.id %>')" style="display: none;">
+          <div class="leave-profile">
             <i class="fas fa-user-minus"></i>
             <span>참가취소</span>
+          </div>
         </button>
     </div>
   </header>
