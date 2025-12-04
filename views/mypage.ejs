@@ -81,9 +81,11 @@
                   <% }); %>
                 <% } else { %>
                   <div class="list-card" style="cursor: default;">
-                    <div class="card-img" style="background: linear-gradient(to left, #fbc2eb 0%, #a6c1ee 100%);"></div>
+                    <div class="card-img" style="background: linear-gradient(to left, #fbc2eb 0%, #a6c1ee 100%);">
+                        <div class="emoji">😱</div>
+                    </div>
                     <div class="card-info">
-                        <h4>참여중인 플래너가 없습니다 😱</h4>
+                        <h4>참여중인 플래너가 없습니다..</h4>
                         <p>메인에서 탐색해보세요!</p>
                     </div>
                   </div>
@@ -115,15 +117,24 @@
                   <% }); %>
                 <% } else { %>
                   <div class="list-card" style="cursor: default;">
-                      <div class="card-img" style="background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);"></div>
+                      <div class="card-img" style="background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);">
+                            <div class="emoji">😭</div>
+                      </div>
                       <div class="card-info">
-                          <h4>작성한 플래너가 없습니다 😭</h4>
-                          <p>'플래너 작성' 버튼을 눌러 직접 여행을 계획해보세요!</p>
+                            <h4>작성한 플래너가 없습니다..</h4>
+                            <p>'플래너 작성' 버튼을 눌러 직접 여행을 계획해보세요!</p>
                       </div>
                   </div>
                 <% } %>
             </div>
         </section>
+    </div>
+
+     <div class="floating-container">
+        <a href="/write" class="floating-btn">
+            <i class="fas fa-pen"></i>
+            <span>플래너 작성</span>
+        </a>
     </div>
 </body>
 </html>

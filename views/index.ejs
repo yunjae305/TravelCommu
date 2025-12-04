@@ -67,9 +67,11 @@
                     <% }); %>
                 <% } else { %>
                     <div class="card" style="cursor: default;">
-                        <div class="card-image" style="background: linear-gradient(to left, #b5e7a0, #c9f1b9);"></div>
+                        <div class="card-image" style="background: linear-gradient(-60deg, #9795f0 0%, #fbc8d4 100%);">
+                            <div class="emoji">😥</div>
+                        </div>
                         <div class="card-content">
-                            <h3 class="card-name">일치하는 플랜이 없습니다 😥</h3>
+                            <h3 class="card-name">일치하는 플랜이 없습니다..</h3>
                         </div>
                     </div>
                 <% } %>
@@ -102,7 +104,7 @@
                 <% } else { %>
                     <div class="card" style="cursor: default;">
                         <div class="card-image" style="background: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);">
-                            <p style="font-size: 50px">😎</p>
+                            <div class="emoji">😎</div>
                         </div>
                         <div class="card-content">
                             <h3 class="card-name">새로운 플랜을 작성해보세요!</h3>
@@ -112,12 +114,10 @@
             </div>
         </section>
 
-        <div class="floating-button-box">
-            <a href="/write" class="write-item">
-                <div class="write-button">
-                    <i class="fas fa-pen"></i> 
-                </div>
-                <span class="write-label">플래너 작성</span>
+        <div class="floating-container">
+            <a href="/write" class="floating-btn">
+                <i class="fas fa-pen"></i>
+                <span>플래너 작성</span>
             </a>
         </div>
     </div>

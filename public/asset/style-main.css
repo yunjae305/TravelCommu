@@ -104,14 +104,7 @@ header
     transition: opacity 0.2s;
 }
 
-.user-profile i
-{
-    text-decoration: none;
-    font-size: 24px;
-    margin-right: 8px;
-}
-
-.logout-profile i
+.user-profile i, .logout-profile i
 {
     text-decoration: none;
     font-size: 24px;
@@ -193,11 +186,21 @@ header
 
 .card-image
 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 180px;
     background-size: cover;
     background-position: center;
     background-color: #e0e0e0;
+}
+
+.emoji
+{
+    margin-top: 10px;
+    font-size: 100px; 
+    line-height: 1;
 }
 
 .card-content
@@ -264,42 +267,48 @@ header
     text-decoration: none;
 }
 
-.write-button 
-{
-    width: 90px;
-    height: 90px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: #005eff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid #f0f0f0;
+.floating-container {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1000;
 }
 
-.write-button i 
+.floating-btn
 {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 1500%;
-    height: 1500%;
+    gap: 12px; 
+    background-color: #005eff;
+    color: #ffffff;
+    padding: 16px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 94, 255, 0.4);
+    transition: all 0.3s ease;
 }
 
-.write-button:hover
+.floating-btn i 
 {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    font-size: 20px;
 }
 
-.write-label
+.floating-btn span 
 {
-    margin-top: 8px;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
-    color: #000000;
-    text-shadow: 1px 1px 0 #ffffff;
+    letter-spacing: -0.5px;
+}
+
+.floating-btn:hover 
+{
+    background-color: #0046be; 
+    transform: translateY(-4px); 
+    box-shadow: 0 10px 25px rgba(0, 94, 255, 0.5);
+}
+
+.floating-btn:active 
+{
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 94, 255, 0.4);
 }

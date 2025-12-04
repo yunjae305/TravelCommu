@@ -71,6 +71,23 @@ header
     gap: 5px;
 }
 
+.back-profile, .save-profile, .delete-profile
+{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: opacity 0.2s;
+}
+
+.back-profile i, .save-profile i, .delete-profile i
+{
+    text-decoration: none;
+    font-size: 24px;
+    margin-right: 8px;
+}
+
 .back-btn:hover 
 {
     transition: background-color 0.3s, color 0.3s;
@@ -81,14 +98,14 @@ header
 .save-btn:hover
 {
     transition: background-color 0.3s, color 0.3s;
-    background-color:#3e85ff;
+    background-color:#21924e;
     color:#ffffff;
 }
 
 .delete-btn:hover
 {
     transition: background-color 0.3s, color 0.3s;
-    background-color:red;
+    background-color:#d32f2f;
     color:#ffffff;
 }
 
@@ -173,9 +190,7 @@ header
     margin-right: 8px;
 }
 
-input,
-select,
-textarea 
+input, select, textarea 
 {
     padding: 14px;
     font-size: 15px;
@@ -219,8 +234,6 @@ input:focus, select:focus, textarea:focus
     color: #000000;
 }
 
-
-/* === 오른쪽 패널 (경로 설정) === */
 .right-panel 
 {
     display: flex;
@@ -273,16 +286,6 @@ input:focus, select:focus, textarea:focus
     border-radius: 8px;
 }
 
-/* 여행지 입력: 화살표 아이콘 */
-.route-arrow 
-{
-    display: flex;
-    justify-content: center;
-    color: #d0d0d0;
-    padding: 5px 0;
-    font-size: 14px;
-}
-
 /* 추가 버튼 */
 .btn-add-route 
 {
@@ -304,6 +307,7 @@ input:focus, select:focus, textarea:focus
 
 .btn-add-route:hover 
 {
+    transition: background-color 0.3s;
     background-color: #0046be;
     color: #ffffff;
 }

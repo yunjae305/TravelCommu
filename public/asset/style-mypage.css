@@ -2,6 +2,7 @@ body
 {
     background-color: #faf9f1;
     margin: 0;
+    overflow: auto;
 }
 
 .bg-icon 
@@ -248,14 +249,24 @@ header
     border-color: #005eff;
 }
 
-.card-img 
+.card-img
 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100px;
     height: 100px;
     border-radius: 60px;
     background-size: cover;
     background-position: center;
     margin-right: 25px;
+}
+
+.emoji
+{
+    margin-top: 10px;
+    font-size: 60px; 
+    line-height: 1;
 }
 
 .user-type .card-img.user-img 
@@ -305,4 +316,50 @@ header
 .see-more:hover 
 {
     color: #005eff;
+}
+
+.floating-container {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1000;
+}
+
+.floating-btn
+{
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+    background-color: #005eff;
+    color: #ffffff;
+    padding: 16px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 94, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.floating-btn i 
+{
+    font-size: 20px;
+}
+
+.floating-btn span 
+{
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.floating-btn:hover 
+{
+    background-color: #0046be; 
+    transform: translateY(-4px); 
+    box-shadow: 0 10px 25px rgba(0, 94, 255, 0.5);
+}
+
+.floating-btn:active 
+{
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 94, 255, 0.4);
 }
