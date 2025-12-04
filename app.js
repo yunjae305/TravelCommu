@@ -21,6 +21,32 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//모든 요청에 대해 쿠키를 확인하고, 로그인된 유저 정보를 req.user와 res.locals.user에 심어줌
+app.use((req, res, next) => {
+    const userCookie = req.cookies.user;
+    if (userCookie) 
+    {
+      try 
+      {
+        const user = JSON.parse(userCookie);
+        req.user = user; // 컨트롤러에서 사용 (req.user)
+        res.locals.user = user; // EJS에서 바로 사용 (<%= user.name %>)
+      } 
+      catch(error) 
+      {
+        console.error("쿠키 파싱 에러", error);
+        req.user = null;
+        res.locals.user = null;
+      }
+    } 
+    else 
+    {
+        req.user = null;
+        res.locals.user = null;
+    }
+    next();
+});
+
 app.use('/', travelRoutes);
 
 app.use((err, req, res, _next) => {

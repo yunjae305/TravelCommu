@@ -52,6 +52,28 @@
                 </tr>
               </thead>
               <tbody id="my-plans-body">
+                <% if (trips && trips.length > 0) { %>
+                    <% trips.forEach(planner => { %>
+                        <tr onclick="location.href='/detail-myplan/<%= planner.id %>'" style="cursor: pointer;">
+                            <td>
+                                <span class="trip-title" style="font-weight:600; color:#0f172a;">
+                                    <%= planner.topic %>
+                                </span>
+                            </td>
+                            <td class="trip-meta">
+                                <%= planner.participants ? planner.participants.length : 0 %> / <%= planner.headcount %>
+                            </td>
+                            <td class="trip-meta"><%= planner.authorName %></td>
+                            <td class="trip-meta">
+                                <%= planner.createdAt ? new Date(planner.createdAt).toLocaleDateString() : '-' %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4" class="empty-row">'<%= user.name %>'님이 작성하신 여행 플랜이 없습니다.</td>
+                    </tr>
+                <% } %>
               </tbody>
             </table>
         </section>
@@ -65,8 +87,5 @@
             <span class="write-label">플래너 작성</span>
         </a>
     </div>
-
-    <script type="module" src="/auth-ui.js"></script>
-    <script type="module" src="/find-my-plan-list.js"></script>
   </body>
 </html>

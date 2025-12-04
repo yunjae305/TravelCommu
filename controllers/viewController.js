@@ -1,47 +1,66 @@
 const TripDB = require('../models/tripModel');
 
-//여행 플랜 상세 페이지 (자기꺼가 아닐때)
-const showDetailPage = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const trip = await TripDB.findById(id);
-
-        if (!trip) {
-            return res.status(404).render('detail', {
-                title: '여행을 찾을 수 없습니다',
-                trip: null,
-                message: '존재하지 않는 여행입니다.'
-            });
-        }
-        res.render('detail', { title: trip.topic, trip: trip});
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("상세 페이지 로딩 실패");
+//메인페이지
+const showMainPage = async (req, res) => {
+    //비로그인 처리
+    if (!req.user) 
+    {
+        // 비로그인 상태면 로그인 페이지로 리다이렉트
+        return res.render('login');
     }
-};
 
-////여행 플랜 상세 페이지 (자기꺼일때)
-const showMyDetailPage = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const trip = await TripDB.findById(id);
+    try 
+    {
+        const user = req.user;
+        const allTrips = await TripDB.getAll();
 
-        if (!trip) {
-            return res.status(404).render('detail', {
-                title: '여행을 찾을 수 없습니다',
-                trip: null,
-                message: '존재하지 않는 여행입니다.'
-            });
-        }
-        res.render('detailmyplan', { title: trip.topic, trip: trip});
-    } catch (error) {
+        const favorites = [];
+        const myPlans = [];
+
+        allTrips.forEach(trip => {
+            //선호 국가 로직
+            if (trip.destination === user.country && trip.authorName !== user.name) 
+            {
+                if (favorites.length < 4) 
+                {
+                    favorites.push(trip);
+                }
+            }
+            
+            // 내 플랜 로직
+            if (trip.authorName === user.name && trip.authorEmail === user.email) 
+            {
+                if (myPlans.length < 4)
+                {
+                    myPlans.push(trip);
+                }
+            }
+        });
+
+        //화면 렌더링
+        res.render('index', {
+            title: '여행 커뮤니티',
+            favorites: favorites, // 선호 국가 데이터
+            myPlans: myPlans      // 내 플랜 데이터
+        });
+
+    } 
+    catch (error) 
+    {
         console.error(error);
-        res.status(500).send("상세 페이지 로딩 실패");
+        res.status(500).send("메인 페이지 로딩 실패");
     }
 };
 
 //마이페이지
 const showMyPage = async (req, res) => {
+    //비로그인 처리
+    if (!req.user) 
+    {
+        // 비로그인 상태면 로그인 페이지로 리다이렉트
+        return res.render('login');
+    }
+
     try 
     {
         //쿠키에서 유저 정보 꺼내기
@@ -91,23 +110,138 @@ const showMyPage = async (req, res) => {
     }
 };
 
-//내 플랜 전체 보기
+//여행 플랜 상세 페이지 (자기꺼가 아닐때)
+const showDetailPage = async (req, res) => {
+    //비로그인 처리
+    if (!req.user) 
+    {
+        // 비로그인 상태면 로그인 페이지로 리다이렉트
+        return res.render('login');
+    }
+
+    try
+    {
+        const id = req.params.id;
+        const trip = await TripDB.findById(id);
+
+        if (!trip) 
+        {
+            return res.status(404).render('detail', {
+                title: '여행을 찾을 수 없습니다',
+                trip: null,
+                message: '존재하지 않는 여행입니다.'
+            });
+        }
+        res.render('detail', { title: trip.topic, trip: trip});
+    } 
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("상세 페이지 로딩 실패");
+    }
+};
+
+//여행 플랜 상세 페이지 (자기꺼일때)
+const showMyDetailPage = async (req, res) => {
+    //비로그인 처리
+    if (!req.user) 
+    {
+        // 비로그인 상태면 로그인 페이지로 리다이렉트
+        return res.render('login');
+    }
+
+    try 
+    {
+        const id = req.params.id;
+        const trip = await TripDB.findById(id);
+
+        if (!trip) 
+        {
+            return res.status(404).render('detail', {
+                title: '여행을 찾을 수 없습니다',
+                trip: null,
+                message: '존재하지 않는 여행입니다.'
+            });
+        }
+        res.render('detailmyplan', { title: trip.topic, trip: trip});
+    } 
+    catch (error) 
+    {
+        console.error(error);
+        res.status(500).send("상세 페이지 로딩 실패");
+    }
+};
+
+//내 플랜 목록 보기
 const showMyTripsPage = async (req, res) => {
-    try {
-        const trips = await TripDB.getAll();
-        res.render('mytrip', { title: '내 플랜', trips });
-    } catch (error) {
+    //로그인 확인
+    if (!req.user)
+    {
+        return res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
+    }
+
+    try 
+    {
+        const user = req.user;
+        const allTrips = await TripDB.getAll();
+        const myPlans = [];
+
+        //내가 작성한 플랜 필터링
+        allTrips.forEach(u => {
+            if (u.authorName === user.name && u.authorEmail === user.email) 
+            {
+                myPlans.push(u);
+            }
+        });
+
+        //데이터와 함께 렌더링
+        res.render('mytrip', { 
+            title: '내 플랜',
+            trips: myPlans,
+            user: user 
+        });
+
+    } 
+    catch (error) 
+    {
         console.error(error);
         res.status(500).send("내 플랜 로딩 실패");
     }
 };
 
-//전체 여행 목록 보기
-const showTripListPage = async (req, res) => {
-    try {
-        const trips = await TripDB.getAll();
-        res.render('favoritetrip', { title: '여행 플랜 목록', trips });
-    } catch (error) {
+//선호 여행 국가 플랜 목록 보기
+const showFavoriteTripListPage = async (req, res) => 
+{
+    //로그인 확인
+    if (!req.user) 
+    {
+        return res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
+    }
+
+    try 
+    {
+        const user = req.user;
+        const allTrips = await TripDB.getAll();
+        const favorites = [];
+
+        //선호 국가 플랜 필터링 (내가 쓴건 제외)
+        allTrips.forEach(u => {
+            if (u.destination === user.country && u.authorName !== user.name) 
+            {
+                favorites.push(u);
+            }
+        });
+
+        //데이터와 함께 렌더링
+        res.render('favoritetrip', {
+            title: '여행 플랜 목록', 
+            trips: favorites,
+            user: user 
+        });
+
+    } 
+    catch (error) 
+    {
         console.error(error);
         res.status(500).send("목록 로딩 실패");
     }
@@ -116,10 +250,6 @@ const showTripListPage = async (req, res) => {
 // --- 단순 렌더링 (데이터 조회 불필요) ---
 const showLoginPage = (req, res) => {
     res.render('login', { title: '로그인' });
-};
-
-const showMainPage = async (req, res) => {
-    res.render('index', { title: '여행 커뮤니티'});
 };
 
 const showSignupPage = (req, res) => {
@@ -141,7 +271,7 @@ module.exports = {
     showMyDetailPage,
     showMyPage,
     showMyTripsPage,
-    showTripListPage,
+    showFavoriteTripListPage,
     showLoginPage,
     showSignupPage,
     showWritePage,

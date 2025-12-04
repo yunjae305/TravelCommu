@@ -17,7 +17,7 @@ router.get('/profile-fix', viewController.showProfileFixPage);
 router.get('/mypage', viewController.showMyPage);
 
 router.get('/mytrip', viewController.showMyTripsPage);
-router.get('/myfavorite', viewController.showTripListPage);
+router.get('/myfavorite', viewController.showFavoriteTripListPage);
 
 router.get('/write', viewController.showWritePage);
 

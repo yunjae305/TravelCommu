@@ -38,7 +38,7 @@
             <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-heart" style="color: #ff6b6b; margin-right: 8px;"></i>
-                    <span>선호 여행국가 플래너 목록</span>
+                    <span>선호 여행국가 플래너 목록 (<%= user.country %>)</span>
                 </h2>
                 <a href="/home" class="see-more" style="color: #005eff; cursor: pointer;">← 돌아가기</a>
             </div>
@@ -53,21 +53,31 @@
                 </tr>
               </thead>
               <tbody id="trip-list-body">
+                <% if (trips && trips.length > 0) { %>
+                    <% trips.forEach(planner => { %>
+                        <tr onclick="location.href='/detail/<%= planner.id %>'" style="cursor: pointer;">
+                            <td>
+                                <span class="trip-title" style="font-weight:600; color:#0f172a;">
+                                    <%= planner.topic %>
+                                </span>
+                            </td>
+                            <td class="trip-meta">
+                                <%= planner.participants ? planner.participants.length : 0 %> / <%= planner.headcount %>
+                            </td>
+                            <td class="trip-meta"><%= planner.authorName %></td>
+                            <td class="trip-meta">
+                                <%= planner.createdAt ? new Date(planner.createdAt).toLocaleDateString() : '-' %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4" class="empty-row">'<%= user.country %>' 관련 여행 플랜이 없습니다.</td>
+                    </tr>
+                <% } %>
               </tbody>
             </table>
         </section>
     </div>
-
-   <div class="floating-button-box">
-        <a href="/write" class="write-item">
-            <div class="write-button">
-                <i class="fas fa-pen" style="width:50px; height:50px;"></i>
-            </div>
-            <span class="write-label">플래너 작성</span>
-        </a>
-    </div>
-
-    <script type="module" src="/auth-ui.js"></script>
-    <script type="module" src="/find-favorite-plan-list.js"></script>
   </body>
 </html>
