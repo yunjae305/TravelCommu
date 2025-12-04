@@ -47,9 +47,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         } 
         else 
         {
-            gridContainer.innerHTML = `<p style="padding:20px;">'${currentUser.name}'님이 작성하신 여행 플랜이 없습니다.</p>`;
+            gridContainer.innerHTML = `
+                <div class="card">
+                            <div class="card-image" style="background: linear-gradient(to left, #3c6cf2, #a1c2ff);"></div>
+                            <div class="card-content">
+                                <h3 class="card-name">새로운 플랜을 작성해보세요 😎</h3>
+                            </div>
+                </div>
+            `;
         }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error("플랜 로딩 실패:", error);
     }
 });

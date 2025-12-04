@@ -29,6 +29,8 @@ router.get('/trips/:id', viewController.showDetailPage);
 // ============================================================
 
 router.post('/planner', apiController.createPlanner);
+
+//local에 저장되어있는 User정보를 넘겨받은 후, 해당 User가 작성한 플랜을 가져오는 라우터
 router.post('/api/trips/favorite', apiController.getFavoritePlans);
 router.post('/api/trips/myplans', apiController.getMyPlans);
 

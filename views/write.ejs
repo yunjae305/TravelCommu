@@ -102,52 +102,7 @@
         </form>
     </div>
 
-    <script>
-      (function() {
-        const form = document.getElementById('planner-form');
-        const addBtn = document.getElementById('add-route-btn');
-        const routeList = document.getElementById('route-list');
-        const placesInput = document.getElementById('places');
-
-        function syncAuthor() {
-          try {
-            const raw = localStorage.getItem('currentUser');
-            if (!raw) return;
-            const user = JSON.parse(raw);
-            if (user.name) document.getElementById('authorName').value = user.name;
-            if (user.email) document.getElementById('authorEmail').value = user.email;
-          } catch (e) {
-            console.warn('작성자 정보 설정 실패', e);
-          }
-        }
-
-        function updateRouteIndexes() {
-          const indexes = routeList.querySelectorAll('.route-index');
-          indexes.forEach((el, idx) => {
-            el.textContent = idx + 1;
-          });
-        }
-
-        function addRouteInput() {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'route-item';
-          wrapper.innerHTML = '<span class="route-index"></span><input class="route-input" placeholder="방문지">';
-          routeList.appendChild(wrapper);
-          updateRouteIndexes();
-        }
-
-        addBtn?.addEventListener('click', addRouteInput);
-
-        form?.addEventListener('submit', () => {
-          const values = Array.from(document.querySelectorAll('.route-input'))
-            .map((el) => el.value.trim())
-            .filter(Boolean);
-          placesInput.value = values.join(',');
-          syncAuthor();
-        });
-
-        syncAuthor();
-      })();
-    </script>
+    <!-- User가 입력한 input폼을 합쳐서 처리하는 JS -->
+    <script type="module" src="/create-plan-data-set.js"></script>
 </body>
 </html>
