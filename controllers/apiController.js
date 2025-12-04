@@ -22,7 +22,7 @@ const createPlanner = asyncHandler(async (req, res) => {
     };
 
     const newTrip = await TripDB.create(newTripData);
-    res.redirect(`/trips/${newTrip.id}`);
+    res.redirect(`/home`);
 });
 
 //플래너 삭제 처리
