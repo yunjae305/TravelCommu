@@ -72,17 +72,10 @@
                   <% }); %>
                 <% } else { %>
                   <div class="list-card">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-img" style="background: linear-gradient(to left, #fbc2eb 0%, #a6c1ee 100%);"></div>
                     <div class="card-info">
-                        <h4>제주도 3박 4일 여행</h4>
-                        <p>2023.12.20 ~ 12.23</p>
-                    </div>
-                  </div>
-                  <div class="list-card">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
-                    <div class="card-info">
-                        <h4>도쿄 먹방 투어</h4>
-                        <p>2024.01.15 ~ 01.18</p>
+                        <h4>참여중인 플래너가 없습니다 😱</h4>
+                        <p>메인에서 탐색해보세요!</p>
                     </div>
                   </div>
                 <% } %>
@@ -97,17 +90,20 @@
                     <div class="list-card">
                         <div class="card-img" style="background-image: url('<%= fallbackImages[(idx + 1) % fallbackImages.length] %>');"></div>
                         <div class="card-info">
-                            <h4><a href="/trips/<%= trip.id %>"><%= trip.topic || trip.title %></a></h4>
-                            <p><%= trip.headcount ? trip.headcount + '명 모집' : '인원 미정' %></p>
+                            <h4><a href="/detail-myplans/<%= trip.id %>"><%= trip.topic || trip.title %></a></h4>
+                            <p class="date-text">
+                              <i class="far fa-clock"></i> 
+                              <%= trip.createdAt ? new Date(trip.createdAt).toLocaleDateString() : '날짜 미정' %>
+                            </p>
                         </div>
                     </div>
                   <% }); %>
                 <% } else { %>
                   <div class="list-card">
-                      <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                      <div class="card-img" style="background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);"></div>
                       <div class="card-info">
-                          <h4>이번 여름 부산 여행</h4>
-                          <p>작성 중...</p>
+                          <h4>작성한 플래너가 없습니다 😭</h4>
+                          <p>'플래너 작성' 버튼을 눌러 직접 여행을 계획해보세요!</p>
                       </div>
                   </div>
                 <% } %>
