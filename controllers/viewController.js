@@ -2,13 +2,6 @@ const TripDB = require('../models/tripModel');
 
 //메인페이지
 const showMainPage = async (req, res) => {
-    //비로그인 처리
-    if (!req.user) 
-    {
-        // 비로그인 상태면 로그인 페이지로 리다이렉트
-        return res.render('login');
-    }
-
     try 
     {
         const user = req.user;
@@ -54,25 +47,10 @@ const showMainPage = async (req, res) => {
 
 //마이페이지
 const showMyPage = async (req, res) => {
-    //비로그인 처리
-    if (!req.user) 
-    {
-        // 비로그인 상태면 로그인 페이지로 리다이렉트
-        return res.render('login');
-    }
-
     try 
     {
         //쿠키에서 유저 정보 꺼내기
-        const userCookie = req.cookies.user;
-        
-        if (!userCookie) 
-        {
-            //비로그인 상태면 로그인 페이지로 튕겨내기
-            return res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
-        }
-
-        const user = JSON.parse(userCookie);
+        const user = req.user;
 
         //DB에서 모든 플랜 가져오기
         const allTrips = await TripDB.getAll();
@@ -112,13 +90,6 @@ const showMyPage = async (req, res) => {
 
 //여행 플랜 상세 페이지 (자기꺼가 아닐때)
 const showDetailPage = async (req, res) => {
-    //비로그인 처리
-    if (!req.user) 
-    {
-        // 비로그인 상태면 로그인 페이지로 리다이렉트
-        return res.render('login');
-    }
-
     try
     {
         const id = req.params.id;
@@ -143,13 +114,6 @@ const showDetailPage = async (req, res) => {
 
 //여행 플랜 상세 페이지 (자기꺼일때)
 const showMyDetailPage = async (req, res) => {
-    //비로그인 처리
-    if (!req.user) 
-    {
-        // 비로그인 상태면 로그인 페이지로 리다이렉트
-        return res.render('login');
-    }
-
     try 
     {
         const id = req.params.id;
@@ -174,12 +138,6 @@ const showMyDetailPage = async (req, res) => {
 
 //내 플랜 목록 보기
 const showMyTripsPage = async (req, res) => {
-    //로그인 확인
-    if (!req.user)
-    {
-        return res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
-    }
-
     try 
     {
         const user = req.user;
@@ -210,14 +168,7 @@ const showMyTripsPage = async (req, res) => {
 };
 
 //선호 여행 국가 플랜 목록 보기
-const showFavoriteTripListPage = async (req, res) => 
-{
-    //로그인 확인
-    if (!req.user) 
-    {
-        return res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
-    }
-
+const showFavoriteTripListPage = async (req, res) => {
     try 
     {
         const user = req.user;
@@ -247,6 +198,15 @@ const showFavoriteTripListPage = async (req, res) =>
     }
 };
 
+//로그인 항상 요구
+const requireLogin = (req, res, next) => {
+    if (!req.user) 
+    {
+        return res.redirect('/'); 
+    }
+    next();
+};
+
 // --- 단순 렌더링 (데이터 조회 불필요) ---
 const showLoginPage = (req, res) => {
     res.render('login', { title: '로그인' });
@@ -266,6 +226,7 @@ const showProfileFixPage = (req, res) => {
 
 //module.exports로 내보내기
 module.exports = {
+    requireLogin,
     showMainPage,
     showDetailPage,
     showMyDetailPage,

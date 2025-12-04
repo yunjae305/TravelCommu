@@ -4,13 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const participantsStr = container.dataset.participants || '[]';
     const participants = JSON.parse(participantsStr);
 
-    const userStr = localStorage.getItem('user');
-    const currentUser = JSON.parse(userStr);
-
     const btnJoin = document.getElementById('join-btn');
     const btnLeave = document.getElementById('leave-btn');
 
-    const myId = currentUser.userId;
+    const myId = container.dataset.userId;
+
+    if (!myId) return;
 
     //이미 참가중인 플래너이면: 참여 취소 버튼
     if (participants.includes(myId))
@@ -43,15 +42,22 @@ window.leaveTrip = async function(tripId) {
 
 // POST방식으로 정보를 보낸 후 라우팅 결과에 따라 출력하는 함수
 async function sendRequest(url) {
-    const userStr = localStorage.getItem('user');
-    const user = JSON.parse(userStr);
+    const container = document.getElementById('trip-container');
+    const myId = container.dataset.userId;
+
+    if (!myId) 
+    {
+        alert("로그인 정보가 없습니다.");
+        location.href = '/';
+        return;
+    }
 
     try 
     {
         const res = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: user.userId })
+            body: JSON.stringify({ userId: myId })
         });
         
         const data = await res.json();

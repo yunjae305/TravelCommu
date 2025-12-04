@@ -5,35 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 숨겨진 input 요소들 (서버로 보낼 데이터)
     const placesInput = document.getElementById('places');
-    const authorNameInput = document.getElementById('authorName');
-    const authorEmailInput = document.getElementById('authorEmail');
-
-    //로컬스토리지에서 사용자 정보 가져와서 hidden input에 채우기
-    function syncAuthor() {
-        try {
-            const raw = localStorage.getItem('user');
-            
-            if (!raw) 
-                return;
-            
-            const user = JSON.parse(raw);
-            
-            // 작성자 이름과 이메일 설정
-            if (authorNameInput && user.name)
-            {
-                authorNameInput.value = user.name;
-            }
-                
-            if (authorEmailInput && user.email)
-            {
-                authorEmailInput.value = user.email;
-            }  
-        } 
-        catch (error) 
-        {
-            console.error(error);
-        }
-    }
 
     //방문지 번호 증가 함수
     function updateRouteIndexes() 
@@ -62,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //버튼 클릭 이벤트 연결 (방문지 추가 이벤트)
-    if (addBtn) 
+    if(addBtn) 
     {
         addBtn.addEventListener('click', addRouteInput);
     }
 
-    // 5. 폼 제출 전 데이터 정리 (저장 이벤트)
-    if (form) 
+    //폼 제출 전 데이터 정리 (저장 이벤트)
+    if(form) 
     {
         form.addEventListener('submit', () => {
             // 모든 방문지 입력칸(.route-input)을 찾아서 가져옴
@@ -90,12 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 placesInput.value = resultList.join(',');
             }
-            
-            //제출 전, User정보 한번 더 확인
-            syncAuthor();
         });
     }
-
-    // 페이지 로드 시 최초 실행
-    syncAuthor();
 });

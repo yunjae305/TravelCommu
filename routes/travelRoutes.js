@@ -1,6 +1,29 @@
 const express = require('express');
-const viewController = require('../controllers/viewController');
-const apiController = require('../controllers/apiController');
+const {
+    requireLogin,
+    showMainPage,
+    showDetailPage,
+    showMyDetailPage,
+    showMyPage,
+    showMyTripsPage,
+    showFavoriteTripListPage,
+    showLoginPage,
+    showSignupPage,
+    showWritePage,
+    showProfileFixPage
+} = require('../controllers/viewController');
+
+const {
+    createPlanner,
+    deletePlanner,
+    getFavoritePlans, 
+    getMyPlans,
+    getJoinedPlans,
+    joinPlanner,
+    leavePlanner,
+    login,
+    logout
+} = require('../controllers/apiController');
 
 const router = express.Router();
 
@@ -8,22 +31,22 @@ const router = express.Router();
 // [View] 화면 렌더링 (GET 요청) - viewController가 담당
 // ============================================================
 
-router.get('/', viewController.showLoginPage);
-router.get('/home', viewController.showMainPage);
+router.get('/', showLoginPage);
+router.get('/home', requireLogin, showMainPage);
 
-router.get('/signup', viewController.showSignupPage);
-router.get('/profile-fix', viewController.showProfileFixPage);
+router.get('/signup', requireLogin, showSignupPage);
+router.get('/profile-fix', requireLogin, showProfileFixPage);
 
-router.get('/mypage', viewController.showMyPage);
+router.get('/mypage', requireLogin, showMyPage);
 
-router.get('/mytrip', viewController.showMyTripsPage);
-router.get('/myfavorite', viewController.showFavoriteTripListPage);
+router.get('/mytrip', requireLogin, showMyTripsPage);
+router.get('/myfavorite', requireLogin, showFavoriteTripListPage);
 
-router.get('/write', viewController.showWritePage);
+router.get('/write', requireLogin, showWritePage);
 
 //detail: 자기꺼가 아닌 플랜, detail-myplan:자기 플랜일때
-router.get('/detail/:id', viewController.showDetailPage);
-router.get('/detail-myplan/:id', viewController.showMyDetailPage);
+router.get('/detail/:id', requireLogin, showDetailPage);
+router.get('/detail-myplan/:id', requireLogin, showMyDetailPage);
 
 
 // ============================================================
@@ -31,22 +54,22 @@ router.get('/detail-myplan/:id', viewController.showMyDetailPage);
 // ============================================================
 
 //로그인, 로그아웃 요청
-router.post('/login', apiController.login);
-router.get('/logout', apiController.logout);
+router.post('/login', login);
+router.get('/logout', logout);
 
 //플래너 생성/삭제 라우터
-router.post('/planner', apiController.createPlanner);
-router.post('/trips/:id/delete', apiController.deletePlanner);
+router.post('/planner', createPlanner);
+router.post('/trips/:id/delete', deletePlanner);
 
 //플래너 참가/참가 취소(관리자가 직접 삭제) 라우터
-router.post('/trips/:id/join', apiController.joinPlanner);
-router.post('/trips/:id/leave', apiController.leavePlanner);
+router.post('/trips/:id/join', joinPlanner);
+router.post('/trips/:id/leave', leavePlanner);
 
 //local에 저장되어있는 User정보를 넘겨받은 후, 해당 User가 작성한 플랜을 가져오는 라우터
-router.post('/api/trips/favorite', apiController.getFavoritePlans);
-router.post('/api/trips/myplans', apiController.getMyPlans);
+router.post('/api/trips/favorite', getFavoritePlans);
+router.post('/api/trips/myplans', getMyPlans);
 
 //로그인한 유저가 참여하고 있는 플랜을 가져오는 라우터
-router.post('/api/trips/joined', apiController.getJoinedPlans);
+router.post('/api/trips/joined', getJoinedPlans);
 
 module.exports = router;

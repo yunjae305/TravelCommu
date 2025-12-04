@@ -48,7 +48,9 @@ signupBtn.addEventListener('click', async (e) => {
     alert("회원가입 성공!");
     window.location.href = '/';
 
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.error("저장 실패:", error);
     alert("회원가입 중 오류가 발생했습니다: " + error.message);
   }

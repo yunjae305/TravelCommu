@@ -17,11 +17,11 @@
 
         <!-- 헤더 우측: 로그인 링크, 로그인 시 노출되는 프로필/로그아웃 -->
         <div class="header-actions" style="display:flex; gap:12px; align-items:center;">
-            <div id="header-user" style="display:none; gap:8px; align-items:center;">
-                <a href="/mypage" class="header-right" id="header-profile" style="display:flex; align-items:center; gap:6px;">
+            <div id="header-user" style="display: flex; gap:8px; align-items:center;">
+                <a href="/mypage" class="header-right" id="header-profile" style="text-decoration:none; display:flex; align-items:center; gap:6px;">
                     <div class="user-profile">
                         <i class="fas fa-user-circle"></i>
-                        <span class="user-name" id="user-name" style="display:none;">OOO님</span>
+                        <span class="user-name" id="user-name" style="text-decoration:none;"><%= user.name %>님</span>
                     </div>
                 </a>
                 <button class="logout-btn" onclick="location.href='/logout'">로그아웃</button>
@@ -104,6 +104,15 @@
                 <% } %>
             </div>
         </section>
+
+        <div class="floating-button-box">
+            <a href="/write" class="write-item">
+                <div class="write-button">
+                    <i class="fas fa-pen" style="width:50px; height:50px;"></i> 
+                </div>
+                <span class="write-label">플래너 작성</span>
+            </a>
+        </div>
     </div>
   </body>
 </html>
