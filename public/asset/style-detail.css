@@ -360,7 +360,8 @@ header
 }
     
 .save-btn:hover 
-{ 
+{
+    transition: background 0.3s;
     background: #21924e;
     color: #ffffff;
 }
