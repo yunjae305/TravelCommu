@@ -64,6 +64,12 @@ const remove = async (id) => {
   await tripsRef.child(id).remove();
 };
 
+//플랜 수정사항 적용
+const update = async (id, data) => {
+    //기존 데이터 위에 덮어쓰기
+    await tripsRef.child(id).update(data);
+};
+
 //ID로 플랜 하나 찾기
 const findById = async (id) => {
   const snapshot = await tripsRef.child(id).once('value');
@@ -84,6 +90,7 @@ module.exports = {
   getAll,
   create,
   remove,
+  update,
   findById,
   joinPlan,
   leavePlan,

@@ -261,3 +261,123 @@ header
     align-items: center; 
     font-size: 16px;
 }
+
+.edit-group 
+{
+     margin-bottom: 25px; 
+}
+
+.edit-label 
+{
+     display: block; 
+     font-weight: 700; 
+     color: #1e293b; 
+     margin-bottom: 8px;
+      font-size: 16px; 
+}
+    
+.edit-input 
+{ 
+    width: 100%; 
+    padding: 12px; 
+    border: 1px solid #dddddd; 
+    border-radius: 8px; 
+    font-size: 15px; 
+    background: #fcfcfc; 
+    box-sizing: border-box; 
+}
+    
+.edit-input:focus 
+{ 
+    border-color: #005eff; 
+    background: #ffffff; 
+    outline: none; 
+}
+    
+.row-group 
+{ 
+    display: flex; 
+    gap: 20px; 
+}
+    
+.col-half 
+{ 
+    flex: 1; 
+}
+
+.place-item 
+{ 
+    display: flex; 
+    gap: 10px; 
+    margin-bottom: 10px; 
+    align-items: center;
+}
+    
+.remove-place-btn
+{ 
+    background: #ffebeb; 
+    color: #ff4d4d; 
+    border: none; 
+    padding: 8px 12px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+    
+.add-place-btn
+{ 
+    width: 100%; 
+    padding: 10px; 
+    background: #005eff; 
+    border: none;
+    border-radius: 50px;
+    color: #ffffff; 
+    cursor: pointer; 
+    font-weight: 600;
+}
+    
+.add-place-btn:hover 
+{ 
+    background: #004aca;
+}
+    
+.save-btn:hover 
+{ 
+    background: #0046be;
+    color: #ffffff;
+}
+
+/* 참가자 관리 스타일 */
+.participant-box 
+{ 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 12px; 
+    border: 1px solid #eee; 
+}
+    
+.p-item 
+{ 
+    display: inline-flex; 
+    align-items: center; 
+    background: #f8f9fa; 
+    padding: 8px 14px; 
+    border-radius: 20px; 
+    margin: 5px; 
+    border: 1px solid #eee; 
+}
+    
+.p-name 
+{ 
+    font-weight: 500; 
+    margin-right: 10px; 
+    color: #333; 
+}
+    
+.p-remove 
+{ 
+    color: #ff4d4d; 
+    cursor: pointer; 
+    border: none; 
+    background: none; 
+    font-size: 14px;
+}

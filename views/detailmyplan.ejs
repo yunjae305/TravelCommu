@@ -3,116 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>여행 상세</title>
+  <title>플랜 수정</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
   <link rel="stylesheet" href="/asset/style-detail.css">
 </head>
 <body>
   <header class="top-header">
     <div class="header-left">
         <a href="/home" class="logo">
-        <i class="fas fa-plane-departure"></i> 
-        <span class="logo-text">Travel</span>
+            <i class="fas fa-plane-departure"></i> 
+            <span class="logo-text">Travel</span>
         </a>
     </div>
     <div class="header-right">
-        <button class="header-btn back-btn" onclick="location.href='javascript:history.back();'">
-            <i class="fas fa-arrow-left"></i> 
-            <span>이전</span>
+        <button class="header-btn back-btn" onclick="location.href='/home'">
+            <i class="fas fa-times"></i> 
+            <span>취소</span>
         </button>
-        <button id="join-btn" class="header-btn delete-btn" data-id="<%= trip.id %>" onclick="deleteTrip('<%= trip.id %>')">
-            <i class="fas fa-user-plus"></i> 
-            <span>삭제하기</span>
+        <button class="header-btn delete-btn" onclick="deleteTrip('<%= trip.id %>')">
+            <i class="fas fa-trash-alt"></i>
+            <span>플랜 삭제</span>
+        </button>
+        <button class="header-btn save-btn" type="submit" class="save-btn" form="edit-form">
+            <i class="fas fa-check"></i> 
+            <span>수정 완료</span>
         </button>
     </div>
   </header>
 
-  <div class="bg-icon">
-      <i class="fas fa-plane"></i>
-  </div>
+  <div class="bg-icon"><i class="fas fa-plane"></i></div>
 
-  <main class="detail-container" id="trip-container" data-participants="<%= JSON.stringify(trip.participants || []) %>">
+  <main class="detail-container" id="trip-container" data-user-id="<%= user.userId %>">
     <section class="board-article">
-        <header class="board-head">
-          <div class="board-title">
-              <h1><%= trip.topic %></h1>
-          </div>
-        </header>
-
-        <div class="board-tags">
-            <span class="pill">
-              <i class="fas fa-map-marker-alt"></i> <%= trip.destination %>
-            </span>
-            <span class="pill">
-              <i class="fas fa-wallet"></i> <%= trip.budget ? Number(trip.budget).toLocaleString() + '원' : '미정' %>
-            </span>
-            <span class="pill">
-              <i class="fas fa-users"></i> <%= trip.participants.length ? trip.participants.length : '0' %> / <%= trip.headcount ? trip.headcount + '명' : '미정' %>
-            </span>
+        
+        <div style="text-align:center; margin-bottom:30px;">
+            <h2 style="color:#005eff;">플랜 수정하기</h2>
         </div>
 
-        <article class="board-body">
-            <h3 class="section-title">
-              <i class="fas fa-info-circle" style="color: #005eff;"></i> 상세 내용
-            </h3>
-            <p class="detail-text"><%= trip.description || '상세 설명이 없습니다.' %></p>
-        
-            <div class="board-meta">
-                <span><i class="fas fa-user" style="margin-right: 6px;"></i><%= trip.authorName || '익명' %></span>
-                <span><i class="far fa-clock" style="margin-right: 6px;"></i><%= trip.createdAt ? new Date(trip.createdAt).toLocaleDateString() : '-' %></span>
+        <form id="edit-form" action="/trips/<%= trip.id %>/update" method="POST">
+            
+            <div class="edit-group">
+                <label class="edit-label">여행 주제 (제목)</label>
+                <input type="text" class="edit-input" name="topic" value="<%= trip.topic %>" required>
             </div>
-        </article>
 
-        <% if (trip.places && trip.places.length > 0) { %>
-        <section class="board-body route-body">
-          <h3 class="section-title">
-          <i class="fas fa-route" style="color: #005eff;"></i> 여행 코스
-          </h3>
-        
-        <div class="route-flow">
-           <% trip.places.forEach((place, index) => { %>
-           
-          <div class="route-item"><%= place %></div>
-
-          <% if (index < trip.places.length - 1) { %>
-            <i class="fas fa-arrow-right route-arrow"></i>
-          <% } %>
-
-        <% }); %>
-        </div>
-        </section>
-        <% } %>
-
-        <section class="board-body participants-body">
-          <h3 class="section-title">
-              <i class="fas fa-user-friends" style="color: #005eff;"></i> 참가자 명단
-          </h3>
-          
-          <div class="participant-list">
-          <% if (trip.participants && trip.participants.length > 0) { %>
-            <% trip.participants.forEach(userId => { %>
-            <div class="participant-chip">    
-                <span style="margin-right: 8px;">
-                    <i class="fas fa-user-circle" style="margin-right: 5px;"></i>
-                    <%= userId %>
-                </span>
-
-                <button class="removePart" onclick="leaveTrip('<%= trip.id %>', '<%= userId %>')" title="내보내기">
-                    <i class="fas fa-times-circle"></i>
-                </button>
+            <div class="row-group">
+                <div class="edit-group col-half">
+                    <label class="edit-label">여행 국가</label>
+                    <input type="text" class="edit-input" name="destination" value="<%= trip.destination %>" required>
+                </div>
+                <div class="edit-group col-half">
+                    <label class="edit-label">최대 인원</label>
+                    <input type="number" class="edit-input" name="headcount" value="<%= trip.headcount %>" min="1" required>
+                </div>
+                <div class="edit-group col-half">
+                    <label class="edit-label">예산 (원)</label>
+                    <input type="text" class="edit-input" name="budget" value="<%= trip.budget %>">
+                </div>
             </div>
-            <% }); %>
-          <% } else { %>
-            <p style="color: #888; font-size: 0.9rem;">아직 참가자가 없습니다.</p>
-          <% } %>
-          </div>
-        </section>
+
+            <div class="edit-group">
+                <label class="edit-label">
+                    <i class="fas fa-route" style="color:#005eff;"></i> 여행 코스 설정
+                </label>
+                <div id="place-list">
+                    <% if (trip.places && trip.places.length > 0) { %>
+                        <% trip.places.forEach((place) => { %>
+                            <div class="place-item">
+                                <input type="text" class="edit-input place-input" value="<%= place %>" placeholder="방문지 입력">
+                                <button type="button" class="remove-place-btn" onclick="removePlace(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="place-item">
+                            <input type="text" class="edit-input place-input" placeholder="방문지 입력">
+                            <button type="button" class="remove-place-btn" onclick="removePlace(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    <% } %>
+                </div>
+                <button type="button" class="add-place-btn" onclick="addPlace()">+ 방문지 추가</button>
+            </div>
+
+            <div class="edit-group">
+                <label class="edit-label">상세 내용</label>
+                <textarea class="edit-input" name="description" rows="8"><%= trip.description %></textarea>
+            </div>
+
+            <div class="edit-group">
+                <label class="edit-label" style="color:#ff4d4d;">
+                    <i class="fas fa-user-minus"></i> 참가자 관리
+                </label>
+                <div class="participant-box">
+                    <% if (trip.participants && trip.participants.length > 0) { %>
+                        <% trip.participants.forEach(userId => { %>
+                            <div class="p-item">
+                                <span class="p-name"><i class="fas fa-user"></i> <%= userId %></span>
+                                <button type="button" class="p-remove" onclick="removeParticipant('<%= trip.id %>', '<%= userId %>')">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p style="color:#999999; font-size:14px;">참가자가 없습니다.</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <input type="hidden" name="places" id="places-hidden">
+        </form>
     </section>
   </main>
 
+  <script type="module" src="/edit-my-plan.js"></script>
   <script type="module" src="/remove-deleteP-plan.js"></script>
 </body>
 </html>

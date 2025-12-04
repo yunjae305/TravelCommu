@@ -3,6 +3,7 @@ const TripDB = require('../models/tripModel');
 const UserDB = require('../models/userModel');
 const db = require('../config/firebase');
 
+//로그인 처리
 const login = asyncHandler(async (req, res) => {
     const { id, password } = req.body;
 
@@ -40,7 +41,8 @@ const logout = (req, res) => {
 const createPlanner = asyncHandler(async (req, res) => {
     const { title, location, members, budget, desc, places, authorName, authorEmail } = req.body;
 
-    if (!title || !location) {
+    if (!title || !location)
+    {
          return res.status(400).send("<script>alert('필수 정보(주제, 여행지)를 입력해주세요.'); history.back();</script>");
     }
 
@@ -55,8 +57,28 @@ const createPlanner = asyncHandler(async (req, res) => {
         authorEmail: authorEmail
     };
 
-    const newTrip = await TripDB.create(newTripData);
-    res.redirect(`/home`);
+    try
+    {
+        await TripDB.create(newTripData);
+
+        res.send(`
+            <script>
+                alert('플래너가 성공적으로 저장되었습니다!');
+                location.href = '/home';
+            </script>
+        `);
+    }
+    catch(error)
+    {
+        console.error(error);
+        
+        res.send(`
+            <script>
+                alert('플래너 저장에 실패하였습니다! 작성을 다시 해주세요');
+                location.href = '/write';
+            </script>
+        `);
+    }
 });
 
 //플래너 삭제 처리
@@ -64,6 +86,50 @@ const deletePlanner = asyncHandler(async (req, res) => {
     const tripId = req.params.id;
     await TripDB.remove(tripId);
     res.json({ success: true, message: "삭제되었습니다." });
+});
+
+//플래너 수정 및 업데이트 처리
+const updatePlanner = asyncHandler(async (req, res) => {
+    const tripId = req.params.id;
+    const { topic, destination, headcount, budget, description, places } = req.body;
+
+    if (!topic || !destination) 
+    {
+        return res.send("<script>alert('제목과 여행지는 필수입니다.'); history.back();</script>");
+    }
+
+    //DB 업데이트 데이터 구성
+    const updateData = {
+        topic,
+        destination,
+        headcount,
+        budget,
+        description,
+        places: places
+    };
+
+    // Firebase 업데이트
+    try
+    {
+        await TripDB.update(tripId, updateData);
+
+        res.send(`
+            <script>
+                alert('수정이 완료되었습니다!');
+                location.href = '/detail-myplan/${tripId}';
+            </script>
+        `);
+    }
+    catch(error)
+    {
+        console.error(error);
+        res.send(`
+            <script>
+                alert('수정에 실패하였습니다! 다시 저장해주세요');
+                location.href = '/detail-myplan/${tripId}';
+            </script>
+        `);
+    }
 });
 
 //선호 국가 여행 플래너 보기
@@ -150,7 +216,7 @@ const joinPlanner = asyncHandler(async (req, res) => {
     //인원 초과 확인
     //(현재 참가자 수 + 1)이 (최대 인원)보다 크면 불가, 작성자 포함
     if (trip.participants.length >= trip.headcount) 
-        {
+    {
         return res.status(400).json({ success: false, message: "모집 인원이 마감되었습니다." });
     }
 
@@ -181,6 +247,7 @@ const leavePlanner = asyncHandler(async (req, res) => {
 module.exports = { 
     createPlanner,
     deletePlanner,
+    updatePlanner,
     getFavoritePlans, 
     getMyPlans,
     getJoinedPlans,

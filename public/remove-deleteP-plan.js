@@ -1,6 +1,6 @@
 //전역 함수 등록 (onclick에서 사용)
 window.deleteTrip = async function(tripId) {
-    if (!confirm("정말 여행 플래너를 삭제하시겠습니까?")) return;
+    if (!confirm("여행 플래너를 삭제하시겠습니까?")) return;
     await sendRequestDeleteplan(`/trips/${tripId}/delete`);
 };
 

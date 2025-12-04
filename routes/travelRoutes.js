@@ -16,6 +16,7 @@ const {
 const {
     createPlanner,
     deletePlanner,
+    updatePlanner,
     getFavoritePlans, 
     getMyPlans,
     getJoinedPlans,
@@ -57,9 +58,10 @@ router.get('/detail-myplan/:id', requireLogin, showMyDetailPage);
 router.post('/login', login);
 router.get('/logout', logout);
 
-//플래너 생성/삭제 라우터
+//플래너 생성/삭제/수정 라우터
 router.post('/planner', createPlanner);
 router.post('/trips/:id/delete', deletePlanner);
+router.post('/trips/:id/update', updatePlanner);
 
 //플래너 참가/참가 취소(관리자가 직접 삭제) 라우터
 router.post('/trips/:id/join', joinPlanner);
