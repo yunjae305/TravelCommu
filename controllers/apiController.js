@@ -243,6 +243,51 @@ const leavePlanner = asyncHandler(async (req, res) => {
     res.json({ success: true, message: "참가 취소가 완료되었습니다!" });
 });
 
+//유저 프로파일 수정
+const updateProfile = asyncHandler(async (req, res) => {
+    //폼에서 데이터 가져오기
+    const { name, gender, country, email, id, password } = req.body;
+
+    //업데이트할 데이터 객체 생성
+    const updates = {
+        name,
+        gender,
+        country,
+        email,
+        password,
+        userId: id
+    };
+
+    try 
+    {
+        //Firebase DB 업데이트
+        await db.ref(`users/${id}`).update(updates);
+
+        //쿠키 정보도 갱신 (그래야 로그인 세션 유지 가능)
+        res.cookie('user', JSON.stringify(updates), {
+            maxAge: 24 * 60 * 60 * 1000, // 1일
+            httpOnly: true
+        });
+
+        res.send(`
+            <script>
+                alert('회원정보가 수정되었습니다.');
+                location.href = '/mypage';
+            </script>
+        `);
+    } 
+    catch(error) 
+    {
+        console.error(error);
+        res.send(`
+            <script>
+                alert('정보 수정 중 오류가 발생했습니다.');
+                history.back();
+            </script>
+        `);
+    }
+});
+
 //module.exports로 내보내기
 module.exports = { 
     createPlanner,
@@ -254,5 +299,6 @@ module.exports = {
     joinPlanner,
     leavePlanner,
     login,
-    logout
+    logout,
+    updateProfile
  };

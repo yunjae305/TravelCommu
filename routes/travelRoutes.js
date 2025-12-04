@@ -23,7 +23,8 @@ const {
     joinPlanner,
     leavePlanner,
     login,
-    logout
+    logout,
+    updateProfile
 } = require('../controllers/apiController');
 
 const router = express.Router();
@@ -73,5 +74,8 @@ router.post('/api/trips/myplans', getMyPlans);
 
 //로그인한 유저가 참여하고 있는 플랜을 가져오는 라우터
 router.post('/api/trips/joined', getJoinedPlans);
+
+//수정된 유저 프로필 정보를 업데이트 처리하는 라우터
+router.post('/profile-fix', requireLogin, updateProfile);
 
 module.exports = router;
