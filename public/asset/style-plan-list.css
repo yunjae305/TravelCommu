@@ -54,25 +54,6 @@ header
     gap: 20px;
 }
 
-.logout-btn {
-    background-color: #ffffff;
-    color: #005eff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-}
-
-.logout-btn:hover {
-    background-color: red;
-    color: #ffffff;
-    text-decoration: none;
-}
-
 .profile-btn
 {
     text-decoration: none; 

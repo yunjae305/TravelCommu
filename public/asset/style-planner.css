@@ -287,7 +287,7 @@ input:focus, select:focus, textarea:focus
 }
 
 /* 추가 버튼 */
-.btn-add-route 
+.add-route-btn
 {
     margin-top: 40px;
     padding: 12px;
@@ -305,7 +305,7 @@ input:focus, select:focus, textarea:focus
     gap: 5px;
 }
 
-.btn-add-route:hover 
+.add-route-btn:hover 
 {
     transition: background-color 0.3s;
     background-color: #0046be;

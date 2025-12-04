@@ -110,7 +110,7 @@
                         <% trip.participants.forEach(userId => { %>
                             <div class="p-item">
                                 <span class="p-name"><i class="fas fa-user"></i> <%= userId %></span>
-                                <button type="button" class="p-remove" onclick="removeParticipant('<%= trip.id %>', '<%= userId %>')">
+                                <button type="button" class="p-remove" onclick="leaveTrip('<%= trip.id %>', '<%= userId %>')">
                                     <i class="fas fa-times-circle"></i>
                                 </button>
                             </div>
