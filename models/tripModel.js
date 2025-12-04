@@ -7,13 +7,14 @@ const tripsRef = db.ref('trips');
 function normalizeTrip(id, data) {
   if (!data) return null;
   return {
-    id,
+    id: id,
     topic: data.topic || data.title,
     destination: data.destination || data.country,
     places: Array.isArray(data.places)
       ? data.places
       : (data.places || '').toString().split(',').map(t => t.trim()).filter(Boolean),
     headcount: Number(data.headcount) || 0,
+    participants: data.participants ? Object.keys(data.participants) : [],
     budget: data.budget || '예산 미정',
     authorName: data.authorName || data.author || '익명',
     authorEmail: data.authorEmail || '',
@@ -24,12 +25,14 @@ function normalizeTrip(id, data) {
 
 //모든 플랜 가져오기
 const getAll = async () => {
-  const snapshot = await tripsRef.once('value');
+    const snapshot = await tripsRef.once('value');
     const usersArray = [];
     
-    // snapshot.forEach는 Firebase SDK가 제공하는 반복문입니다.
+    // snapshot.forEach는 Firebase SDK가 제공하는 반복문
     snapshot.forEach((childSnapshot) => {
-        usersArray.push(childSnapshot.val());
+        //Plan ID까지 저장을 해서 넘겨줘야 추후 상세정보 조회할때 쓸 수 있음
+        const trip = normalizeTrip(childSnapshot.key, childSnapshot.val());
+        usersArray.push(trip);
     });
     
     return usersArray;
@@ -56,15 +59,32 @@ const create = async (data) => {
   return normalizeTrip(id, rawTrip);
 };
 
+//플랜 삭제하기
+const remove = async (id) => {
+  await tripsRef.child(id).remove();
+};
+
 //ID로 플랜 하나 찾기
 const findById = async (id) => {
   const snapshot = await tripsRef.child(id).once('value');
   return normalizeTrip(id, snapshot.val());
 };
 
-//한꺼번에 내보내기
+//플랜 참가하기 (DB에 사용자 ID 추가)
+const joinPlan = async (tripId, userId) => {
+  await tripsRef.child(tripId).child('participants').child(userId).set(userId);
+};
+
+//플랜 참가 취소하기
+const leavePlan = async (tripId, userId) => {
+  await tripsRef.child(tripId).child('participants').child(userId).remove();
+};
+
 module.exports = {
   getAll,
   create,
+  remove,
   findById,
+  joinPlan,
+  leavePlan,
 };

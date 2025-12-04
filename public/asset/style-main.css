@@ -138,7 +138,6 @@ header
     color: #005eff;
 }
 
-
 /* === 카드 그리드 레이아웃 === */
 .card-grid
 {
@@ -189,6 +188,23 @@ header
     padding: 4px 8px;
     border-radius: 4px;
     margin-bottom: 8px;
+}
+
+.headcount
+{
+    display: inline-block;
+    font-size: 12px;
+    color: #666666;
+    /* padding-left: 100px; */
+    margin-bottom: 8px;
+}
+
+/* 제목과 인원수 같이 표시 */
+.author-participants
+{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
 }
 
 /* 여행플래너 이름*/

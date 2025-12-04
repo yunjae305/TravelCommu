@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const bgImg = 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3';
                     
                     const cardHTML = `
-                        <div class="card" onclick="location.href='/trips/${trip.id}'">
+                        <div class="card" onclick="location.href='/detail-myplan/${trip.id}'">
                             <div class="card-image" style="background-image: url('${bgImg}');"></div>
                             <div class="card-content">
-                                <span class="card-create-name">작성자: ${trip.authorName}</span>
+                                <span class="headcount"><i class="fas fa-users"></i> ${trip.participants.length ? trip.participants.length : 0} / ${trip.headcount}명</span>
                                 <h3 class="card-name">${trip.topic}</h3>
                             </div>
                         </div>

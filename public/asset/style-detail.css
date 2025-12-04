@@ -1,0 +1,263 @@
+body 
+{
+    background-color: #faf9f1;
+    margin: 0;
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.bg-icon 
+{
+    position: absolute;
+    bottom: -400px;
+    right: 10px;
+    font-size: 1500px;
+    color: #005eff;
+    opacity: 0.1;
+    transform: rotate(210deg);
+    pointer-events: none;
+    z-index: -1;
+}
+
+header 
+{
+    height: 50px;
+    background-color: #005eff;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.logo 
+{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo-text 
+{
+    padding-left: 10px;
+}
+
+.header-right 
+{
+    display: flex;
+    gap: 10px;
+}
+
+.header-btn 
+{
+    background-color: #ffffff;
+    color: #005eff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-btn:hover 
+{
+    background-color: #3e85ff;
+    color: #ffffff;
+}
+
+.join-btn:hover 
+{
+    background-color:#21924e;
+    color:#ffffff;
+}
+
+.leave-btn:hover, .delete-btn:hover 
+{
+    background-color: #d32f2f;
+    color: #ffffff;
+}
+
+.detail-container
+{
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 40px 20px 100px;
+}
+
+.board-article 
+{
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+}
+
+/* title */
+.board-head 
+{
+    background: none;
+    box-shadow: none;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+
+.board-title h1 
+{
+    margin: 0;
+    font-size: 36px;
+    font-weight: 900;
+    color: #005eff; 
+    display: inline-block;
+}
+
+.board-tags 
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.pill 
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    background: #f0f7ff;
+    color: #005eff;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid #daeaff;
+}
+
+.pill i 
+{
+    font-size: 14px;
+}
+
+
+.board-body 
+{
+    margin-top: 30px;
+    padding: 25px;
+    background: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid #eef2f6;
+}
+
+.section-title 
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.detail-text 
+{
+    margin: 0;
+    line-height: 1.8;
+    color: #334155;
+    font-size: 16px;
+    white-space: pre-line;
+}
+
+.board-meta 
+{
+    display: flex;
+    gap: 15px;
+    color: #94a3b8;
+    font-size: 14px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.route-body 
+{
+    background: #fff;
+    border: 2px solid #005eff;
+}
+
+.route-flow 
+{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.route-item 
+{
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    background-color: #fff;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+
+.route-arrow 
+{
+    color: #005eff;
+    font-size: 18px;
+}
+
+.participants-body
+{
+    margin-top: 30px; 
+    padding-top: 20px; 
+    border-top: 1px solid #eee;
+}
+
+.participants-list
+{
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+    margin-top: 15px;
+}
+
+.participant-chip
+{
+    background: #f0f4ff;
+    color: #005eff;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 15.2px;
+    display: flex; 
+    align-items: center;
+}
+
+.removePart
+{
+    background: none; 
+    border: none; 
+    color: #ff4d4d; 
+    cursor: pointer; 
+    padding: 0; 
+    display: flex; 
+    align-items: center; 
+    font-size: 16px;
+}

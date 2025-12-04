@@ -1,6 +1,6 @@
 const TripDB = require('../models/tripModel');
 
-//여행 플랜 상세 페이지
+//여행 플랜 상세 페이지 (자기꺼가 아닐때)
 const showDetailPage = async (req, res) => {
     try {
         const id = req.params.id;
@@ -13,7 +13,27 @@ const showDetailPage = async (req, res) => {
                 message: '존재하지 않는 여행입니다.'
             });
         }
-        res.render('detail', { title: trip.topic, trip: trip, message: null });
+        res.render('detail', { title: trip.topic, trip: trip});
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("상세 페이지 로딩 실패");
+    }
+};
+
+////여행 플랜 상세 페이지 (자기꺼일때)
+const showMyDetailPage = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const trip = await TripDB.findById(id);
+
+        if (!trip) {
+            return res.status(404).render('detail', {
+                title: '여행을 찾을 수 없습니다',
+                trip: null,
+                message: '존재하지 않는 여행입니다.'
+            });
+        }
+        res.render('detailmyplan', { title: trip.topic, trip: trip});
     } catch (error) {
         console.error(error);
         res.status(500).send("상세 페이지 로딩 실패");
@@ -47,7 +67,7 @@ const showMyTripsPage = async (req, res) => {
 const showTripListPage = async (req, res) => {
     try {
         const trips = await TripDB.getAll();
-        res.render('trip-list', { title: '여행 플랜 목록', trips });
+        res.render('favoritetrip', { title: '여행 플랜 목록', trips });
     } catch (error) {
         console.error(error);
         res.status(500).send("목록 로딩 실패");
@@ -79,6 +99,7 @@ const showProfileFixPage = (req, res) => {
 module.exports = {
     showMainPage,
     showDetailPage,
+    showMyDetailPage,
     showMyPage,
     showMyTripsPage,
     showTripListPage,

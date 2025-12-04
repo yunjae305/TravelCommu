@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             plans.forEach(planner => {
                 const date = planner.createdAt ? new Date(planner.createdAt).toLocaleDateString() : '-';
                 const rowHTML = `
-                    <tr onclick="location.href='/trips/${planner.id}'" style="cursor: pointer;">
+                    <tr onclick="location.href='/detail-myplan/${planner.id}'" style="cursor: pointer;">
                         <td><span class="trip-title" style="font-weight:600; color:#0f172a;">${planner.topic}</span></td>
-                        <td class="trip-meta">${planner.headcount}</td>
+                        <td class="trip-meta">${planner.participants.length} / ${planner.headcount}</td>
                         <td class="trip-meta">${planner.authorName}</td>
                         <td class="trip-meta">${date}</td>
                     </tr>

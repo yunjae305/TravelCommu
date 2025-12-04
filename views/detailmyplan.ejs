@@ -23,13 +23,9 @@
             <i class="fas fa-arrow-left"></i> 
             <span>이전</span>
         </button>
-        <button id="join-btn" class="header-btn join-btn" data-id="<%= trip.id %>" onclick="joinTrip('<%= trip.id %>')" style="display: none;">
+        <button id="join-btn" class="header-btn delete-btn" data-id="<%= trip.id %>" onclick="deleteTrip('<%= trip.id %>')">
             <i class="fas fa-user-plus"></i> 
-            <span>참가하기</span>
-        </button>
-        <button id="leave-btn" class="header-btn leave-btn" data-id="<%= trip.id %>" onclick="leaveTrip('<%= trip.id %>')" style="display: none;">
-            <i class="fas fa-user-minus"></i>
-            <span>참가취소</span>
+            <span>삭제하기</span>
         </button>
     </div>
   </header>
@@ -71,7 +67,7 @@
         </article>
 
         <% if (trip.places && trip.places.length > 0) { %>
-      <section class="board-body route-body">
+        <section class="board-body route-body">
           <h3 class="section-title">
           <i class="fas fa-route" style="color: #005eff;"></i> 여행 코스
           </h3>
@@ -81,17 +77,38 @@
            
           <div class="route-item"><%= place %></div>
 
-          <% if (index < trip.places.length - 1) { %>
-            <i class="fas fa-arrow-right route-arrow"></i>
-          <% } %>
-
         <% }); %>
-      </div>
-      </section>
-      <% } %>
+        </div>
+        </section>
+        <% } %>
+
+        <section class="board-body participants-body">
+          <h3 class="section-title">
+              <i class="fas fa-user-friends" style="color: #005eff;"></i> 참가자 명단
+          </h3>
+          
+          <div class="participant-list">
+          <% if (trip.participants && trip.participants.length > 0) { %>
+            <% trip.participants.forEach(userId => { %>
+            <div class="participant-chip">    
+                <span style="margin-right: 8px;">
+                    <i class="fas fa-user-circle" style="margin-right: 5px;"></i>
+                    <%= userId %>
+                </span>
+
+                <button class="removePart" onclick="leaveTrip('<%= trip.id %>', '<%= userId %>')" title="내보내기">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </div>
+            <% }); %>
+          <% } else { %>
+            <p style="color: #888; font-size: 0.9rem;">아직 참가자가 없습니다.</p>
+          <% } %>
+          </div>
+        </section>
     </section>
   </main>
 
-  <script type="module" src="/join-leave-plan.js"></script>
+  <script type="module" src="/remove-deleteP-plan.js"></script>
 </body>
 </html>
