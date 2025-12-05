@@ -36,7 +36,7 @@ const router = express.Router();
 router.get('/', showLoginPage);
 router.get('/home', requireLogin, showMainPage);
 
-router.get('/signup', requireLogin, showSignupPage);
+router.get('/signup', showSignupPage);
 router.get('/profile-fix', requireLogin, showProfileFixPage);
 
 router.get('/mypage', requireLogin, showMyPage);
