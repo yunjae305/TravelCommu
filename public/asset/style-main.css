@@ -2,7 +2,8 @@ body
 {
     background-color: #faf9f1;
     margin: 0;
-    overflow: auto;
+    overflow-x: hidden;  /* X축(가로) 스크롤 숨김 */
+    overflow-y: auto;    /* Y축(세로) 스크롤 자동 */
 }
 
 .bg-icon 
