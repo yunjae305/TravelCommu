@@ -2,7 +2,7 @@ body
 {
     background-color: #faf9f1;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .bg-icon 

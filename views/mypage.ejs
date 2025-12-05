@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="/asset/style-mypage.css">
 </head>
 <body>
@@ -44,7 +46,10 @@
             <div class="profile-info">
                 <span class="profile-img"></span>
                 <div class="profile-text">
-                    <h2>안녕하세요,<br><strong><%= user.name %>님</strong></h2>
+                    <h2>안녕하세요,<br>
+                        <strong>
+                            <%= user.name %>님 <span class="country-flag" aria-label="사용자 국가"><%= countryFlag %></span>
+                        </strong></h2>
                 </div>
             </div>
             <a href="/profile-fix" class="change-profile">
@@ -136,5 +141,30 @@
             <span>플래너 작성</span>
         </a>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flagElement = document.querySelector('.country-flag');
+
+            if (!flagElement || !flagElement.textContent.trim())
+            {
+                return;
+            }
+
+            twemoji.parse(flagElement, {
+                folder: 'svg',
+                ext: '.svg',
+            });
+
+            const flagImage = flagElement.querySelector('img');
+
+            if (flagImage)
+            {
+                flagImage.classList.add('country-flag-img');
+                flagImage.setAttribute('aria-hidden', 'true');
+                flagImage.setAttribute('alt', '');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,16 @@
 const TripDB = require('../models/tripModel');
 
+const COUNTRY_FLAGS = new Map([
+    ['대한민국', '🇰🇷'],
+    ['일본', '🇯🇵'],
+    ['베트남', '🇻🇳'],
+]);
+
+const getCountryFlag = (countryName) => {
+    if (!countryName) return '🌍';
+    return COUNTRY_FLAGS.get(countryName.trim()) || '🌍';
+};
+
 //메인페이지
 const showMainPage = async (req, res) => {
     try 
@@ -78,7 +89,8 @@ const showMyPage = async (req, res) => {
             title: '마이페이지', 
             user: user, 
             myPlans: myPlans,
-            joinedPlans: joinedPlans
+            joinedPlans: joinedPlans,
+            countryFlag: getCountryFlag(user.country) 
         });
 
     } 
