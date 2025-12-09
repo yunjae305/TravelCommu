@@ -57,7 +57,7 @@
                                 <div class="author-participants">
                                     <span class="headcount">
                                         <i class="fas fa-users"></i> 
-                                        <%= trip.participants ? trip.participants.length : 0 %> / <%= trip.headcount %>명
+                                        <%= trip.participants ? trip.participants.length : 1 %> / <%= trip.headcount %>명
                                     </span>
                                     <span class="card-create-name">작성자: <%= trip.authorName %></span>
                                 </div>
@@ -95,7 +95,7 @@
                             <div class="card-content">
                                 <span class="headcount">
                                     <i class="fas fa-users"></i> 
-                                    <%= trip.participants ? trip.participants.length : 0 %> / <%= trip.headcount %>명
+                                    <%= trip.participants ? trip.participants.length : 1 %> / <%= trip.headcount %>명
                                 </span>
                                 <h3 class="card-name"><%= trip.topic %></h3>
                             </div>
