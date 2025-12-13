@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const TripDB = require('../models/tripModel');
 const UserDB = require('../models/userModel');
 const db = require('../config/firebase');
+const bcrypt = require('bcrypt');
 
 //로그인 처리
 const login = asyncHandler(async (req, res) => {
@@ -18,8 +19,9 @@ const login = asyncHandler(async (req, res) => {
     const userData = userSnapshot.val();
 
     //비밀번호 확인
-    if (userData.password !== password) 
-    {
+    const isMatch = await bcrypt.compare(password, userData.password);
+
+    if (!isMatch) {
         return res.status(401).json({ success: false, message: "비밀번호가 일치하지 않습니다." });
     }
 
@@ -36,6 +38,32 @@ const logout = (req, res) => {
     res.clearCookie('user');
     res.redirect('/');
 };
+
+//회원가입 처리 (비밀번호 암호화)
+const registerUser = asyncHandler(async (req, res) => {
+    const {id, password, name, email, gender, country} = req.body;
+
+    //아이디 중복 확인
+    const userRef = db.ref(`users/${id}`);
+    const snapshot = await userRef.once('value');
+    
+    if (snapshot.exists()) {
+        return res.status(400).json({ success: false, message: "이미 존재하는 아이디입니다." });
+    }
+    //비밀번호 해시화
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 서버에서 DB에 저장
+    await userRef.set({
+        userId: id,
+        password: hashedPassword,
+        name,
+        email,
+        gender,
+        country
+    }); 
+    res.json({ success: true, message: "회원가입이 완료되었습니다!" })
+});
 
 //플래너 작성 처리
 const createPlanner = asyncHandler(async (req, res) => {
@@ -288,6 +316,7 @@ const updateProfile = asyncHandler(async (req, res) => {
     }
 });
 
+
 //module.exports로 내보내기
 module.exports = { 
     createPlanner,
@@ -300,5 +329,6 @@ module.exports = {
     leavePlanner,
     login,
     logout,
-    updateProfile
+    updateProfile,
+    registerUser
  };

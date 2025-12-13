@@ -23,35 +23,71 @@ signupBtn.addEventListener('click', async (e) => {
     return;
   }
 
-  const dbRef = ref(db);
-  
   try 
   {
-    const check_userAlreadyExists = await get(child(dbRef, `users/${userId}`));
-    
-    if (check_userAlreadyExists.exists()) 
-    {
-      alert("이미 존재하는 아이디입니다.");
-      return;
-    }
-
-    // Realtime Database에 저장
-    await set(ref(db, 'users/' + userId), {
-      userId: userId,
-      password: password,
-      name: name,
-      email: email,
-      gender: gender,
-      country: country,
+    // 기존: const check_userAlreadyExists = await get(child(dbRef, `users/${userId}`));
+    // 변경: 서버로 데이터를 보내서 처리 (서버에서 중복체크 & 암호화 & 저장 수행)
+    const res = await fetch('/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: userId,        // 서버 컨트롤러에서 받는 변수명에 맞춤
+            password: password,
+            name: name,
+            email: email,
+            gender: gender,
+            country: country
+        })
     });
 
-    alert("회원가입 성공!");
-    window.location.href = '/';
+    const data = await res.json();
+    
+    // 기존: if (check_userAlreadyExists.exists()) ... await set(...) ...
+    // 변경: 서버 응답(data.success)에 따라 처리
+    if (data.success) {
+        alert(data.message); // "회원가입 성공!"
+        window.location.href = '/'; // 로그인 화면으로 이동
+    } else {
+        alert(data.message); // "이미 존재하는 아이디입니다." 등
+    }
 
   } 
   catch (error) 
   {
-    console.error("저장 실패:", error);
+    console.error("가입 요청 실패:", error);
     alert("회원가입 중 오류가 발생했습니다: " + error.message);
   }
 });
+
+//   const dbRef = ref(db);
+  
+//   try 
+//   {
+//     const check_userAlreadyExists = await get(child(dbRef, `users/${userId}`));
+    
+//     if (check_userAlreadyExists.exists()) 
+//     {
+//       alert("이미 존재하는 아이디입니다.");
+//       return;
+//     }
+
+//     // Realtime Database에 저장
+//     await set(ref(db, 'users/' + userId), {
+//       userId: userId,
+//       password: password,
+//       name: name,
+//       email: email,
+//       gender: gender,
+//       country: country,
+//     });
+
+//     alert("회원가입 성공!");
+//     window.location.href = '/';
+
+//   } 
+//   catch (error) 
+//   {
+//     console.error("저장 실패:", error);
+//     alert("회원가입 중 오류가 발생했습니다: " + error.message);
+//   }
+// });
