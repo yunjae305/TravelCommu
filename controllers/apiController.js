@@ -41,6 +41,7 @@ const logout = (req, res) => {
 
 //회원가입 처리 (비밀번호 암호화)
 const registerUser = asyncHandler(async (req, res) => {
+    // 1. 클라이언트에서 보낸 데이터 받기
     const {id, password, name, email, gender, country} = req.body;
 
     //아이디 중복 확인
@@ -50,19 +51,26 @@ const registerUser = asyncHandler(async (req, res) => {
     if (snapshot.exists()) {
         return res.status(400).json({ success: false, message: "이미 존재하는 아이디입니다." });
     }
+    try {
     //비밀번호 해시화
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
     // 서버에서 DB에 저장
-    await userRef.set({
-        userId: id,
-        password: hashedPassword,
-        name,
-        email,
-        gender,
-        country
-    }); 
-    res.json({ success: true, message: "회원가입이 완료되었습니다!" })
+        await userRef.set({
+            userId: id,
+            password: hashedPassword,
+            name,
+            email,
+            gender,
+            country,
+            createdAt: Date.now() //가입일
+        }); 
+
+        res.json({ success: true, message: "회원가입이 완료되었습니다!" });
+    } catch (error) {
+        console.error("회원가입 에러:", error);
+        res.status(500).json({ success: false, message: "회원가입 처리 중 오류가 발생했습니다." });
+    }
 });
 
 //플래너 작성 처리

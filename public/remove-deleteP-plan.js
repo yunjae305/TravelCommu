@@ -9,12 +9,12 @@ window.leaveTrip = async function(tripId, participantId) {
     await sendRequestParticipants(`/trips/${tripId}/leave`, participantId);
 };
 
-//POST방식으로 정보를 보낸 후 라우팅 결과에 따라 출력하는 함수 (플래너 삭제)
+//(플래너 삭제)
 async function sendRequestDeleteplan(url) {
     try 
     {
         const res = await fetch(url, {
-            method: 'POST',
+            method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         });
         
