@@ -285,7 +285,11 @@ const updateProfile = asyncHandler(async (req, res) => {
         password,
         userId: id
     };
-
+    if (password && password.trim() !== "") {
+        // 사용자가 새 비밀번호를 입력했다면 -> 암호화해서 updates에 추가
+        const hashedPassword = await bcrypt.hash(password, 10);
+        updates.password = hashedPassword;
+    }
     try 
     {
         //Firebase DB 업데이트
