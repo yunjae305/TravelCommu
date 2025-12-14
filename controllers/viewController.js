@@ -1,11 +1,13 @@
 const TripDB = require('../models/tripModel');
 
+// 국가별 국기 이모지를 미리 매핑해 두는 테이블
 const COUNTRY_FLAGS = new Map([
     ['대한민국', '🇰🇷'],
     ['일본', '🇯🇵'],
     ['베트남', '🇻🇳'],
 ]);
 
+// 국가명을 받아서 대응하는 국기 이모지를 반환
 const getCountryFlag = (countryName) => {
     if (!countryName) return '🌍';
     return COUNTRY_FLAGS.get(countryName.trim()) || '🌍';
@@ -15,12 +17,14 @@ const getCountryFlag = (countryName) => {
 const showMainPage = async (req, res) => {
     try 
     {
+        // 로그인한 사용자 정보와 모든 여행 계획 목록 조회
         const user = req.user;
         const allTrips = await TripDB.getAll();
 
         const favorites = [];
         const myPlans = [];
 
+        // 국가/작성자 조건으로 추천 목록과 내 계획 목록을 나눔
         allTrips.forEach(trip => {
             //선호 국가 로직
             if (trip.destination === user.country && trip.authorName !== user.name) 
@@ -104,6 +108,7 @@ const showMyPage = async (req, res) => {
 const showDetailPage = async (req, res) => {
     try
     {
+        // URL?ì„œ ë°˜ì˜ëœ í™”ë©´?°? IDë¡œ ê°€?¸ì˜¤ê¸?
         const id = req.params.id;
         const trip = await TripDB.findById(id);
 
@@ -128,6 +133,7 @@ const showDetailPage = async (req, res) => {
 const showMyDetailPage = async (req, res) => {
     try 
     {
+        // í¨ë¼ë¯¸í„° IDë¡œ ë§ˆì´ íŒŒë… ?Œëžœ ê°€?¸ì˜¤ê¸?
         const id = req.params.id;
         const trip = await TripDB.findById(id);
 
@@ -236,6 +242,14 @@ const showProfileFixPage = (req, res) => {
     res.render('profile-fix', { title: '회원정보 수정'});
 };
 
+// 함수 추가
+const showApiDocs = (req, res) => {
+    res.render('api-docs', { 
+        title: 'API 명세서',
+        user: req.user || null 
+    });
+};
+
 //module.exports로 내보내기
 module.exports = {
     requireLogin,
@@ -248,5 +262,6 @@ module.exports = {
     showLoginPage,
     showSignupPage,
     showWritePage,
-    showProfileFixPage
+    showProfileFixPage,
+    showApiDocs
 };

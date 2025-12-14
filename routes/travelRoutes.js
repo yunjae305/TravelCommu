@@ -10,7 +10,8 @@ const {
     showLoginPage,
     showSignupPage,
     showWritePage,
-    showProfileFixPage
+    showProfileFixPage,
+    showApiDocs
 } = require('../controllers/viewController');
 
 const {
@@ -34,17 +35,36 @@ const router = express.Router();
 // [View] 화면 렌더링 (GET 요청) - viewController가 담당
 // ============================================================
 
+// --- API 문서 ---
+// API 명세서 페이지
+router.get('/api-docs', showApiDocs);
+
+// --- 인증 (Auth) ---
+// 초기 진입 페이지 (로그인 화면)
 router.get('/', showLoginPage);
+
+// 회원가입 페이지
+router.get('/signup', showSignupPage);
+
+// --- 메인 및 개인화 (Main & Personal) ---
+// 메인 페이지 (로그인 필요)
 router.get('/home', requireLogin, showMainPage);
 
-router.get('/signup', showSignupPage);
+// 회원정보 수정 페이지 (로그인 필요)
 router.get('/profile-fix', requireLogin, showProfileFixPage);
 
+// 마이 페이지 (로그인 필요)
 router.get('/mypage', requireLogin, showMyPage);
 
+// --- 플랜 목록 조회 (Lists) ---
+// 내가 작성한 플랜 목록 페이지 (로그인 필요)
 router.get('/mytrip', requireLogin, showMyTripsPage);
+
+// 선호 여행 국가 플랜 목록 페이지 (로그인 필요)
 router.get('/myfavorite', requireLogin, showFavoriteTripListPage);
 
+// --- 플랜 작성 및 상세 (Actions & Details) ---
+// 플랜 작성 페이지 (로그인 필요)
 router.get('/write', requireLogin, showWritePage);
 
 //detail: 자기꺼가 아닌 플랜, detail-myplan:자기 플랜일때
