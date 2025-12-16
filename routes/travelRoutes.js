@@ -31,9 +31,6 @@ const {
 
 const router = express.Router();
 
-// ============================================================
-// [View] 화면 렌더링 (GET 요청) - viewController가 담당
-// ============================================================
 
 // --- API 문서 ---
 // API 명세서 페이지
@@ -71,10 +68,6 @@ router.get('/write', requireLogin, showWritePage);
 router.get('/detail/:id', requireLogin, showDetailPage);
 router.get('/detail-myplan/:id', requireLogin, showMyDetailPage);
 
-
-// ============================================================
-// [API] 데이터 처리 (POST 요청) - apiController가 담당
-// ============================================================
 
 //로그인, 로그아웃 요청
 router.post('/login', login);

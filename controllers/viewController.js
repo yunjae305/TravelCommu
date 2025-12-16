@@ -250,7 +250,6 @@ const showApiDocs = (req, res) => {
     });
 };
 
-//module.exports로 내보내기
 module.exports = {
     requireLogin,
     showMainPage,

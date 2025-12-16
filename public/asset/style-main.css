@@ -2,8 +2,8 @@ body
 {
     background-color: #faf9f1;
     margin: 0;
-    overflow-x: hidden;  /* X축(가로) 스크롤 숨김 */
-    overflow-y: auto;    /* Y축(세로) 스크롤 자동 */
+    overflow-x: hidden; 
+    overflow-y: auto;    
 }
 
 .bg-icon 
@@ -19,7 +19,7 @@ body
     z-index: -1;
 }
 
-/* === 헤더 스타일 === */
+
 header
 {
     height: 50px;
@@ -112,7 +112,6 @@ header
     margin-right: 8px;
 }
 
-/* === 메인 컨텐츠 영역 === */
 .main-container
 {
     max-width: 1200px;
@@ -159,7 +158,6 @@ header
     color: #005eff;
 }
 
-/* === 카드 그리드 레이아웃 === */
 .card-grid
 {
     display: grid;
@@ -167,7 +165,6 @@ header
     gap: 25px;
 }
 
-/* === 카드 스타일 === */
 .card
 {
     background-color: #fff;
@@ -209,7 +206,6 @@ header
     padding: 15px;
 }
 
-/* 여행플래너 작성자 */
 .card-create-name
 {
     display: inline-block;
@@ -226,11 +222,9 @@ header
     display: inline-block;
     font-size: 12px;
     color: #666666;
-    /* padding-left: 100px; */
     margin-bottom: 8px;
 }
 
-/* 제목과 인원수 같이 표시 */
 .author-participants
 {
     display: flex; 
@@ -238,7 +232,6 @@ header
     justify-content: space-between; 
 }
 
-/* 여행플래너 이름*/
 .card-name
 {
     font-size: 18px;

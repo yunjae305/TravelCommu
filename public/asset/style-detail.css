@@ -120,7 +120,6 @@ header
     padding: 40px;
 }
 
-/* title */
 .board-head 
 {
     background: none;
@@ -366,7 +365,6 @@ header
     color: #ffffff;
 }
 
-/* 참가자 관리 스타일 */
 .participant-box 
 { 
     background: #fff; 

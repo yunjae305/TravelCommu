@@ -328,8 +328,6 @@ const updateProfile = asyncHandler(async (req, res) => {
     }
 });
 
-
-//module.exports로 내보내기
 module.exports = { 
     createPlanner,
     deletePlanner,

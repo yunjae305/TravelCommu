@@ -178,7 +178,6 @@ header
     align-items: center;
 }
 
-/* 점(bullet) 포인트 디자인 */
 .form-group label::before 
 {
     content: '';
@@ -206,14 +205,12 @@ textarea
     resize: vertical;
 }
 
-/* 입력칸을 눌렀을 때: 반응형 디자인 */
 input:focus, select:focus, textarea:focus 
 {
     border-color: #005eff;
     background-color: #ffffff;
 }
 
-/* 인원 입력창 (숫자 + 텍스트) */
 .input-with-text 
 {
     display: flex;
@@ -259,7 +256,6 @@ input:focus, select:focus, textarea:focus
     gap: 10px;
 }
 
-/* 개별 방문지 아이템 */
 .route-item
 {
     display: flex;
@@ -267,7 +263,6 @@ input:focus, select:focus, textarea:focus
     gap: 10px;
 }
 
-/* 여행지 번호 */
 .route-index 
 {
     font-size: 18px;
@@ -277,7 +272,6 @@ input:focus, select:focus, textarea:focus
     text-align: center;
 }
 
-/* 여행지 입력 */
 .route-input 
 {
     flex: 1;
@@ -286,7 +280,6 @@ input:focus, select:focus, textarea:focus
     border-radius: 8px;
 }
 
-/* 추가 버튼 */
 .add-route-btn
 {
     margin-top: 40px;
