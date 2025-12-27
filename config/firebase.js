@@ -7,7 +7,7 @@ const serviceAccountPath =
   process.env.GOOGLE_APPLICATION_CREDENTIALS || path.join(process.cwd(), 'servicekey.json');
 
 if (!fs.existsSync(serviceAccountPath)) {
-  throw new Error(`서비스 계정 파일을 찾을 수 없습니다: ${serviceAccountPath}`);
+  throw new Error(`서비스 계정 파일을 찾을 수 없습니다!!!!: ${serviceAccountPath}`);
 }
 
 const databaseURL = process.env.FIREBASE_DATABASE_URL || DEFAULT_DB_URL;
